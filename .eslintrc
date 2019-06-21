@@ -1,0 +1,109 @@
+{
+  "parser": "babel-eslint",
+  "extends": ["airbnb-base", "airbnb/rules/react"],
+  "plugins": ["import", "react", "react-native"],
+  "env": {
+    "browser": true
+  },
+  "globals": {
+    "__DEV__": false,
+    "__TEST__": false,
+    "__PROD__": false,
+    "__COVERAGE__": false
+  },
+  "rules": {
+    "jsx-a11y": 0,
+    "linebreak-style": 0,
+    "react/jsx-closing-bracket-location": [
+      1,
+      { "selfClosing": "line-aligned", "nonEmpty": "tag-aligned" }
+    ],
+    "function-paren-newline": ["error", "consistent"],
+    "react/jsx-filename-extension": 0,
+    "react/forbid-prop-types": 0,
+    "no-bitwise": 0,
+    "global-require": 0,
+    "no-underscore-dangle": 0,
+    "no-console": 0,
+    "react/no-did-mount-set-state": 0,
+    "jsx-a11y/anchor-is-valid": 0,
+    "no-plusplus": 0,
+    "max-len": [
+      1,
+      {
+        "code": 80
+      }
+    ],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": true,
+        "optionalDependencies": true,
+        "peerDependencies": true
+      }
+    ],
+    "react/sort-comp": [
+      1,
+      {
+        "order": [
+          "constructor",
+          "static-methods",
+          "lifecycle",
+          "everything-else",
+          "render",
+          "contextTypes",
+          "propTypes"
+        ],
+        "groups": {
+          "lifecycle": [
+            "constructor",
+            "displayName",
+            "propTypes",
+            "contextTypes",
+            "childContextTypes",
+            "mixins",
+            "statics",
+            "defaultProps",
+            "getDefaultProps",
+            "state",
+            "getInitialState",
+            "getChildContext",
+            "getDerivedStateFromProps",
+            "componentDidMount",
+            "componentWillMount",
+            "UNSAFE_componentWillMount",
+            "componentWillReceiveProps",
+            "UNSAFE_componentWillReceiveProps",
+            "shouldComponentUpdate",
+            "componentWillUpdate",
+            "UNSAFE_componentWillUpdate",
+            "getSnapshotBeforeUpdate",
+            "componentDidUpdate",
+            "componentDidCatch",
+            "componentWillUnmount"
+          ]
+        }
+      }
+    ],
+    "react/jsx-tag-spacing": [
+      1,
+      {
+        "closingSlash": "never",
+        "beforeSelfClosing": "allow",
+        "afterOpening": "never"
+      }
+    ]
+  },
+  "settings": {
+    "import/resolver": {
+      "alias": [
+        ["components", "./src/components"],
+        ["utils", "./src/utils"],
+        ["layouts", "./src/layouts"],
+        ["scenes", "./src/scenes"],
+        ["assets", "./src/assets"],
+        ["store", "./src/store"]
+      ]
+    }
+  }
+}
