@@ -1,9 +1,17 @@
-import { getBitchuteLoginData } from "./localStorage";
-import { actionAddBitchuteLoginData } from "store";
+import {
+  actionAddBitchuteLoginData,
+  actionToggleLoading,
+  actionBitchuteReloadAll,
+} from 'store';
+import { getBitchuteLoginData } from './localStorage';
+import orientation from './orientation';
 
-export default async function(store) {
+export default async function ({ dispatch }) {
+  orientation({ dispatch });
   const loginData = await getBitchuteLoginData();
   if (loginData && loginData.key && loginData.password) {
-    store.dispatch(actionAddBitchuteLoginData(loginData));
+    dispatch(actionAddBitchuteLoginData(loginData));
   }
+  dispatch(actionToggleLoading());
+  dispatch(actionBitchuteReloadAll());
 }

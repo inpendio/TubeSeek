@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import WebView from "react-native-webview";
-import { getBitchuteSessionCookie } from "utils";
-import { BITCHUTE_URI, JS_FEED } from "./utils";
-import styles from "./styles";
+import React, { useState, memo } from 'react';
+import WebView from 'react-native-webview';
+import { getBitchuteSessionCookie } from 'utils';
+import { BITCHUTE_URI, JS_FEED } from './utils';
+import styles from './styles';
 
 function SubscriptionsWebView() {
   const [cookie, setCookie] = useState(null);
 
-  const onMessage = event => {
+  const onMessage = (event) => {
     let data;
     try {
       data = JSON.parse(event.nativeEvent.data);
@@ -17,7 +17,7 @@ function SubscriptionsWebView() {
     }
   };
   if (!cookie) {
-    const c = getBitchuteSessionCookie().then(c => {
+    const c = getBitchuteSessionCookie().then((c) => {
       setCookie(c);
     });
     return null;
@@ -28,11 +28,8 @@ function SubscriptionsWebView() {
       source={{ uri: BITCHUTE_URI }}
       injectedJavaScript={JS_FEED(cookie)}
       onMessage={onMessage}
-      onShouldStartLoadWithRequest={request => {
-        console.log(request);
-      }}
     />
   );
 }
 
-export default SubscriptionsWebView;
+export default memo(SubscriptionsWebView);

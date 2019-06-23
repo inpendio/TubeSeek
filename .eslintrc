@@ -102,7 +102,8 @@
         ["layouts", "./src/layouts"],
         ["scenes", "./src/scenes"],
         ["assets", "./src/assets"],
-        ["store", "./src/store"]
+        ["store", "./src/store"],
+        ["config", "./src/config"]
       ]
     }
   }

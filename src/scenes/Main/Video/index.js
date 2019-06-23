@@ -1,21 +1,17 @@
-import React from "react";
-import { Text } from "react-native-elements";
-import { Scene, View } from "react-native-magic-move";
+import React, { memo } from 'react';
+import { Scene } from 'react-native-magic-move';
+import { BitchuteVideoView } from 'layouts';
 
-export default function VideoScene() {
+function VideoScene({ navigation }) {
+  const {
+    state: {
+      params: { imageUrl },
+    },
+  } = navigation;
   return (
     <Scene>
-      <View
-        id="FeedSceneView"
-        style={{
-          width: 200,
-          height: 200,
-          backgroundColor: "purple",
-          borderRadius: 0
-        }}
-      >
-        <Text h3>VideoScene</Text>
-      </View>
+      <BitchuteVideoView thumbnail={imageUrl} navigation={navigation} />
     </Scene>
   );
 }
+export default memo(VideoScene);

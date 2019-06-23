@@ -1,6 +1,6 @@
 import { setBitchuteLoginData } from 'utils';
 
-const ACTIONS = {
+export const ACTIONS = {
   ADD_LOGIN_DATA: '(.)add_login_data(.)',
   BITCHUTE_LOGOUT: '(.)bitchute_logout(.)',
   BITCHUTE_LOGIN: '(.)bitchute_login(.)',
@@ -8,6 +8,7 @@ const ACTIONS = {
   BITCHUTE_ADD_FEED_ALL: '(.)bitchute_add_feed_all(.)',
   BITCHUTE_ADD_FEED_TRENDING: '(.)bitchute_add_feed_trending(.)',
   BITCHUTE_ADD_FEED_POPULAR: '(.)bitchute_add_feed_popular(.)',
+  BITCHUTE_RELOAD_ALL: '(.)bitchute_reload_all(.)',
 };
 
 const initialStore = {
@@ -17,13 +18,12 @@ const initialStore = {
     void: [],
     popular: [],
     subscribed: [],
-    trending: {
-      day: [],
-      week: [],
-      month: [],
-    },
+    trendingDay: [],
+    trendingWeek: [],
+    trendingMonth: [],
     all: [],
   },
+  reloadAll: false,
 };
 
 export default function (store = initialStore, action) {
@@ -67,11 +67,13 @@ export default function (store = initialStore, action) {
     }
     case ACTIONS.BITCHUTE_ADD_FEED_TRENDING: {
       const newStore = { ...store };
-      newStore.feed.trending.day = action.payload.trendingDay;
-      newStore.feed.trending.week = action.payload.trendingWeek;
-      newStore.feed.trending.month = action.payload.trendingMonth;
+      newStore.feed.trendingDay = action.payload.trendingDay;
+      newStore.feed.trendingWeek = action.payload.trendingWeek;
+      newStore.feed.trendingMonth = action.payload.trendingMonth;
       return newStore;
     }
+    case ACTIONS.BITCHUTE_RELOAD_ALL:
+      return { ...store, reloadAll: !store.reloadAll };
     default:
       return store;
   }
@@ -103,4 +105,7 @@ export const actionBitchuteAddAllFeed = list => ({
 export const actionBitchuteAddTrendingFeed = list => ({
   type: ACTIONS.BITCHUTE_ADD_FEED_TRENDING,
   payload: list,
+});
+export const actionBitchuteReloadAll = () => ({
+  type: ACTIONS.BITCHUTE_RELOAD_ALL,
 });

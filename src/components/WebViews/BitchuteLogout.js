@@ -1,24 +1,22 @@
-import React from "react";
-import WebView from "react-native-webview";
-import { JS_BITCHUTE_LOGOUT, BITCHUTE_LOGOUT_URI } from "./utils";
-import styles from "./styles";
+import React, { memo } from 'react';
+import WebView from 'react-native-webview';
+import { JS_BITCHUTE_LOGOUT, BITCHUTE_LOGOUT_URI } from './utils';
+import styles from './styles';
 
 function BitchuteLogout({ onSuccess, onFailure }) {
-  const onMessage = event => {
+  const onMessage = (event) => {
     let data;
-    console.log(event.nativeEvent.data);
     try {
       data = JSON.parse(event.nativeEvent.data);
       if (data.login && onFailure) {
-        console.log(data);
         onFailure();
       }
       if (!data.login && onSuccess) {
-        onSuccess({ logout: "success" });
+        onSuccess({ logout: 'success' });
       }
     } catch (error) {
       data = event.nativeEvent.data;
-      console.log(error);
+      console.log(error, data);
       if (onFailure) onFailure({ error, data });
     }
   };
@@ -32,4 +30,4 @@ function BitchuteLogout({ onSuccess, onFailure }) {
   );
 }
 
-export default BitchuteLogout;
+export default memo(BitchuteLogout);

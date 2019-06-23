@@ -1,10 +1,10 @@
-import React from "react";
-import WebView from "react-native-webview";
-import { BITCHUTE_LOGIN_URI, JS_BITCHUTE_LOGIN, ERRORS } from "./utils";
-import styles from "./styles";
+import React, { memo } from 'react';
+import WebView from 'react-native-webview';
+import { BITCHUTE_LOGIN_URI, JS_BITCHUTE_LOGIN, ERRORS } from './utils';
+import styles from './styles';
 
 function LoginWebView({ onSuccess, onFailure, data }) {
-  const onMessage = event => {
+  const onMessage = (event) => {
     let data;
     try {
       data = JSON.parse(event.nativeEvent.data);
@@ -15,7 +15,6 @@ function LoginWebView({ onSuccess, onFailure, data }) {
         onSuccess();
       }
     } catch (error) {
-      data = event.nativeEvent.data;
       if (onFailure) onFailure({ error, data });
     }
   };
@@ -29,4 +28,4 @@ function LoginWebView({ onSuccess, onFailure, data }) {
   );
 }
 
-export default LoginWebView;
+export default memo(LoginWebView);

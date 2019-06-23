@@ -7,4 +7,7 @@ export default StyleSheet.create({
   icon: {
     marginHorizontal: 15,
   },
+  redo: {
+    // height: 5,
+  },
 });

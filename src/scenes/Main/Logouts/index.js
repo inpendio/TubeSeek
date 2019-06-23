@@ -1,12 +1,12 @@
-import React from 'react';
-import { Text } from 'react-native-elements';
-import { Scene, View } from 'react-native-magic-move';
+import React, { memo } from 'react';
+import { Scene } from 'react-native-magic-move';
 import { Logouts } from 'layouts';
 
-export default function VideoScene() {
+function LogoutsScene() {
   return (
     <Scene>
       <Logouts />
     </Scene>
   );
 }
+export default memo(LogoutsScene);

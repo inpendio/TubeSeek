@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { View } from 'react-native';
 import { Button, Card, Image } from 'react-native-elements';
 import { BitchuteLogout } from 'components';
@@ -48,4 +48,4 @@ function Logouts() {
   );
 }
 
-export default Logouts;
+export default memo(Logouts);

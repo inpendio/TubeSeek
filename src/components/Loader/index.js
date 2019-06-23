@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { View, ActivityIndicator } from 'react-native';
+import { colors } from 'config';
 
-function Loader({ size = 'large', color = 'blue', style = {} }) {
+function Loader({
+  size = 'large',
+  color = colors.secondary,
+  style = {},
+  ...other
+}) {
   return (
     <View
       style={[
@@ -14,9 +20,9 @@ function Loader({ size = 'large', color = 'blue', style = {} }) {
         style,
       ]}
     >
-      <ActivityIndicator size={size} color={color} />
+      <ActivityIndicator size={size} color={color} {...other} />
     </View>
   );
 }
 
-export default Loader;
+export default memo(Loader);

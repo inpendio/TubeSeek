@@ -6,6 +6,8 @@ import {
   actionBitchuteAddPopularFeed,
   actionBitchuteAddAllFeed,
   actionBitchuteAddTrendingFeed,
+  actionBitchuteReloadAll,
+  actionToggleLoading,
 } from 'store';
 import { useDispatch } from 'react-redux';
 import { BITCHUTE_URI, JS_FEED } from './utils';
@@ -18,7 +20,6 @@ function FeedWebView() {
     let data;
     try {
       data = JSON.parse(event.nativeEvent.data);
-      console.log(data);
       if (data.parsedData && data.list.subscribed.parsed.length > 0) {
         dispatch(actionBitchuteAddSubsribeFeed(data.list.subscribed.parsed));
       }
@@ -45,6 +46,8 @@ function FeedWebView() {
       if (!data.parsed && data.login === false) {
         dispatch(actionBitchuteLogOut());
       }
+      dispatch(actionBitchuteReloadAll());
+      dispatch(actionToggleLoading());
     } catch (err) {
       ({
         nativeEvent: { data },
@@ -52,7 +55,6 @@ function FeedWebView() {
       console.log(err, data);
     }
   };
-  console.log(JS_FEED);
   return (
     <WebView
       style={styles.hidden}

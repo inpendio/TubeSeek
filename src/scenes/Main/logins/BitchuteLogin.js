@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { View as RNView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Input, Button, Image } from 'react-native-elements';
@@ -6,7 +6,7 @@ import { View, Scene } from 'react-native-magic-move';
 import { setBitchuteLoginData } from 'utils';
 import { bitchuteLogo } from 'assets';
 import { LoginWebView, Loader } from 'components';
-import { actionAddBitchuteLoginData } from 'store';
+import { actionAddBitchuteLoginData, actionBitchuteReloadAll } from 'store';
 import styles from './styles';
 
 function BitchuteLogin({ navigation }) {
@@ -71,6 +71,7 @@ function BitchuteLogin({ navigation }) {
             onSuccess={() => {
               setBitchuteLoginData({ key, password });
               dispatch(actionAddBitchuteLoginData({ key, password }));
+              dispatch(actionBitchuteReloadAll());
               setModal(false);
               navigation.pop();
             }}
@@ -81,4 +82,4 @@ function BitchuteLogin({ navigation }) {
   );
 }
 
-export default BitchuteLogin;
+export default memo(BitchuteLogin);

@@ -3,12 +3,14 @@ import {
 } from 'redux';
 import bitchute from './bitchute';
 import general from './general';
+import video from './video';
 
 const middleware = [];
 
 const rootReducer = combineReducers({
   bitchute,
   general,
+  video,
 });
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -25,4 +27,13 @@ export {
   actionBitchuteAddPopularFeed,
   actionBitchuteAddAllFeed,
   actionBitchuteAddTrendingFeed,
+  actionBitchuteReloadAll,
 } from './bitchute';
+
+export { actionToggleLoading, addOrientationData } from './general';
+
+export {
+  actionFetchBitchuteVideoSource,
+  actionSetBitchuteVideoSource,
+  actionCleanVideo,
+} from './video';

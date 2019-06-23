@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator, NavigationEvents } from 'react-navigation';
 import { Button, Icon, Text } from 'react-native-elements';
-import { HeaderRight } from 'components';
+import { HeaderRight } from 'layouts';
 import Video from './Video';
 import Feed from './Feed';
 // import Logouts from "./Logouts";
