@@ -13,6 +13,7 @@ import BitchuteNexVideos from '../BitchuteNexVideos';
 function BitchuteVideoView({ navigation, thumbnail }) {
   const videoLink = useSelector(s => s.video.link);
   const videoMeta = useSelector(s => s.video.meta);
+
   return (
     <RNView style={{ flex: 1 /* , backgroundColor: 'yellow' */ }}>
       {videoLink ? (

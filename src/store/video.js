@@ -1,3 +1,5 @@
+import { analytics } from 'react-native-firebase';
+
 const ACTIONS = {
   BITCHUTE_GET_VIDEO_SOURCE: '#_bitchute_get_video_source_#',
   BITCHUTE_SET_VIDEO_SOURCE: '#_bitchute_set_video_source_#',
@@ -22,6 +24,11 @@ export default function (store = initialState, action) {
         meta: action.payload,
       };
     case ACTIONS.BITCHUTE_SET_VIDEO_SOURCE:
+      analytics().logEvent('video_view', {
+        videoName: store.meta.text,
+        channel: store.meta.channel,
+        videoLink: action.payload.source,
+      });
       return {
         ...store,
         provider: 'bitchute',

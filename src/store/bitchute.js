@@ -9,6 +9,7 @@ export const ACTIONS = {
   BITCHUTE_ADD_FEED_TRENDING: '(.)bitchute_add_feed_trending(.)',
   BITCHUTE_ADD_FEED_POPULAR: '(.)bitchute_add_feed_popular(.)',
   BITCHUTE_RELOAD_ALL: '(.)bitchute_reload_all(.)',
+  BITCHUTE_APPEND_SEARCH_RESULTS: '(.)bitchute_append_search_results(.)',
 };
 
 const initialStore = {
@@ -24,6 +25,12 @@ const initialStore = {
     all: [],
   },
   reloadAll: false,
+  search: {
+    page: 1,
+    results: [],
+    query: '',
+    type: 'video',
+  },
 };
 
 export default function (store = initialStore, action) {
@@ -74,6 +81,14 @@ export default function (store = initialStore, action) {
     }
     case ACTIONS.BITCHUTE_RELOAD_ALL:
       return { ...store, reloadAll: !store.reloadAll };
+    case ACTIONS.BITCHUTE_APPEND_SEARCH_RESULTS:
+      return {
+        ...store,
+        search: {
+          ...store.search,
+          results: [...store.search.results, ...action.payload],
+        },
+      };
     default:
       return store;
   }
@@ -108,4 +123,8 @@ export const actionBitchuteAddTrendingFeed = list => ({
 });
 export const actionBitchuteReloadAll = () => ({
   type: ACTIONS.BITCHUTE_RELOAD_ALL,
+});
+export const actionAppendSearchResults = payload => ({
+  type: ACTIONS.BITCHUTE_APPEND_SEARCH_RESULTS,
+  payload,
 });

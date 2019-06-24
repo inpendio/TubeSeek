@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "115136798533",
+    "firebase_url": "https://toobseek.firebaseio.com",
+    "project_id": "toobseek",
+    "storage_bucket": "toobseek.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:115136798533:android:7f0aa5f3f0d38a74",
+        "android_client_info": {
+          "package_name": "com.tubeseek"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "115136798533-7ril12dg48iuia90svqh3fm4onr4mej9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYi3jGheOO3C8UnVkO46EsgtFyEC-4k_A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "115136798533-7ril12dg48iuia90svqh3fm4onr4mej9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

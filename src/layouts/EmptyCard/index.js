@@ -10,7 +10,7 @@ function EmptyCard() {
     >
       <Text style={{ textAlign: 'center' }} body1>
         {`There's nothing here.
-      Try to login...`}
+      Try to login or stuff is just loading so wait a bit...`}
       </Text>
     </Card>
   );

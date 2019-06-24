@@ -1,17 +1,20 @@
 import React, { useState, memo } from 'react';
 import { View as RNView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { Input, Button, Image } from 'react-native-elements';
+import {
+  Input, Button, Image, CheckBox,
+} from 'react-native-elements';
 import { View, Scene } from 'react-native-magic-move';
 import { setBitchuteLoginData } from 'utils';
 import { bitchuteLogo } from 'assets';
-import { LoginWebView, Loader } from 'components';
+import { LoginWebView, Loader, Text } from 'components';
 import { actionAddBitchuteLoginData, actionBitchuteReloadAll } from 'store';
 import styles from './styles';
 
 function BitchuteLogin({ navigation }) {
   const bitchuteLoginData = useSelector(state => state.bitchute.loginData);
   const [key, setKey] = useState(bitchuteLoginData.key);
+  const [saveLoginData, setSaveLoginData] = useState(false);
   const [password, setPassword] = useState(bitchuteLoginData.password);
   const [modal, setModal] = useState(false);
   const [error, setError] = useState('');
@@ -54,6 +57,17 @@ function BitchuteLogin({ navigation }) {
               secureTextEntry
             />
           </RNView>
+          <RNView>
+            <CheckBox
+              center
+              title="Save login credentials"
+              checked={saveLoginData}
+              onPress={() => setSaveLoginData(!saveLoginData)}
+            />
+            <Text body4 style={{ textAlign: 'center' }}>
+              Your data will be stored only locally on this device.
+            </Text>
+          </RNView>
           <Button
             onPress={tryLoggin}
             title="LOGIN"
@@ -69,7 +83,7 @@ function BitchuteLogin({ navigation }) {
               setModal(false);
             }}
             onSuccess={() => {
-              setBitchuteLoginData({ key, password });
+              if (saveLoginData) setBitchuteLoginData({ key, password });
               dispatch(actionAddBitchuteLoginData({ key, password }));
               dispatch(actionBitchuteReloadAll());
               setModal(false);

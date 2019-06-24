@@ -2,6 +2,9 @@ export const BITCHUTE_URI = 'https://www.bitchute.com';
 export const BITCHUTE_LOGIN_URI = 'https://www.bitchute.com/accounts/login/';
 export const BITCHUTE_COOKIE_DOMAIN = 'www.bitchute.com';
 export const BITCHUTE_LOGOUT_URI = 'https://www.bitchute.com/accounts/logout/';
+export const BITCHUTE_SEARCCH_URI = (query, type = 'video', page = 1) => `https://search.bitchute.com/renderer?query=${escape(
+  query.replace(' ', '+'),
+)}&use=bitchute-json&name=Search&login=bcadmin&key=7ea2d72b62aa4f762cc5a348ef6642b8&fqa.kind=${type}&page=${page}`;
 
 export const ERRORS = {
   1: { login: false, msg: 'User name or password wrong' },
@@ -244,4 +247,22 @@ function checkLogoutSuccess(){
   }
 }
 setTimeout(checkLogoutSuccess, 1500);
+`;
+
+export const JS_BITCHUTE_SEARCH_PARSE = `
+  var out={results:[]};
+  var results = document.getElementsByClassName("oss-one-result");
+  for(var r of results){
+    var res={};
+    var titleTag = r.getElementsByClassName("ossfieldrdr1")[0];
+    res.link = titleTag.getElementsByTagName("a")[0].href;
+    res.title=titleTag.textContent.trim();
+    res.thumbnail = r.getElementsByTagName("a")[0].src;
+    res.description = r.getElementsByClassName("ossfieldrdr3")[0].textContent.trim();
+    res.timePublished=r.getElementsByClassName("oss-item-displaydate")[0].textContent.trim();
+    res.views = r.getElementsByClassName("oss-item-displayviews")[0].textContent.replace("Views:","").trim();
+    out.results.push(res);
+  }
+  out.totalPages = document.getElementsByClassName("oss-paging")[0].getElementsByTagName("a").length;
+  window.ReactNativeWebView.postMessage(JSON.stringify({data:out, parsed.true}));
 `;

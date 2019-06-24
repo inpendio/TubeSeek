@@ -28,6 +28,7 @@ export {
   actionBitchuteAddAllFeed,
   actionBitchuteAddTrendingFeed,
   actionBitchuteReloadAll,
+  actionAppendSearchResults,
 } from './bitchute';
 
 export { actionToggleLoading, addOrientationData } from './general';

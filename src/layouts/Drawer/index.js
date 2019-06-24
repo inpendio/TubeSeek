@@ -4,7 +4,7 @@ import { View } from 'react-native-magic-move';
 import { Text, Button, Icon } from 'react-native-elements';
 import { bitchuteLogo, logoFull } from 'assets';
 import { useSelector } from 'react-redux';
-import { FeedWebView, BitchuteVideoFetcher } from 'components';
+import { FeedWebView, BitchuteVideoFetcher, BitchuteSearch } from 'components';
 
 import styles from './styles';
 
@@ -15,6 +15,9 @@ function Drawer(props) {
   const bitchuteLogin = useSelector(state => state.bitchute.loggedIn);
   const reloadBitchute = useSelector(state => state.bitchute.reloadAll);
   const bitchuteVideoFetch = useSelector(s => s.video.linkToVideoPage);
+  // const bitchuteSearch = useSelector(s => s.bitchute.search);
+
+  // if(bitchuteSearch.search)navigate("")
 
   return (
     <RNView style={styles.wrapper}>

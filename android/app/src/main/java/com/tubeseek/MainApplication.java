@@ -3,6 +3,9 @@ package com.tubeseek;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+//import io.invertase.firebase.analytics.ReactNativeFirebaseAnalyticsPackage;
+import io.invertase.firebase.RNFirebasePackage;
+import io.invertase.firebase.analytics.RNFirebaseAnalyticsPackage;
 import cl.json.RNSharePackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
@@ -31,6 +34,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            //new ReactNativeFirebaseAnalyticsPackage(),
+            new RNFirebasePackage(),
             new RNSharePackage(),
             new AsyncStoragePackage(),
             new RNGestureHandlerPackage(),
@@ -38,7 +43,8 @@ public class MainApplication extends Application implements ReactApplication {
             new ReactNativeYouTube(),
             new RNCWebViewPackage(),
             new ReactVideoPackage(),
-            new ReactMagicMovePackage()
+            new ReactMagicMovePackage(),
+            new RNFirebaseAnalyticsPackage()
       );
     }
 

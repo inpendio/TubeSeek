@@ -105,8 +105,8 @@ android {
         applicationId "com.tubeseek"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 2
-        versionName "1.0"
+        versionCode 3
+        versionName "1.0.1"
     }
      signingConfigs {
         release {
@@ -149,6 +149,8 @@ android {
 }
 
 dependencies {
+    //implementation project(':@react-native-firebase_analytics')
+    implementation project(':react-native-firebase')
     implementation project(':react-native-share')
     implementation project(':@react-native-community_async-storage')
     implementation project(':react-native-gesture-handler')
@@ -160,6 +162,10 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     implementation "com.facebook.react:react-native:+"  // From node_modules
+
+    // Firebase dependencies
+    implementation "com.google.android.gms:play-services-base:16.1.0"
+    implementation "com.google.firebase:firebase-core:16.0.9"
 }
 
 // Run this once to be able to run the application with BUCK
@@ -168,3 +174,4 @@ task copyDownloadableDepsToLibs(type: Copy) {
     from configurations.compile
     into 'libs'
 }
+apply plugin: 'com.google.gms.google-services'
