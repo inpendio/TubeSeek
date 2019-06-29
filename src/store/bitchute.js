@@ -10,6 +10,8 @@ export const ACTIONS = {
   BITCHUTE_ADD_FEED_POPULAR: '(.)bitchute_add_feed_popular(.)',
   BITCHUTE_RELOAD_ALL: '(.)bitchute_reload_all(.)',
   BITCHUTE_APPEND_SEARCH_RESULTS: '(.)bitchute_append_search_results(.)',
+  BITCHUTE_CLEAN_SEARCH_RESULTS: '(.)bitchute_clean_search_results(.)',
+  BITCHUTE_APPEND_TO_FEED: '(.)bitchute_append_to_feed(.)',
 };
 
 const initialStore = {
@@ -89,6 +91,17 @@ export default function (store = initialStore, action) {
           results: [...store.search.results, ...action.payload],
         },
       };
+    case ACTIONS.BITCHUTE_CLEAN_SEARCH_RESULTS:
+      return {
+        ...store,
+        search: initialStore.search,
+      };
+    case ACTIONS.BITCHUTE_APPEND_TO_FEED: {
+      const { name, data } = action.payload;
+      const newStore = { ...store };
+      newStore.feed[name] = [...store.feed[name], ...data];
+      return newStore;
+    }
     default:
       return store;
   }
@@ -127,4 +140,11 @@ export const actionBitchuteReloadAll = () => ({
 export const actionAppendSearchResults = payload => ({
   type: ACTIONS.BITCHUTE_APPEND_SEARCH_RESULTS,
   payload,
+});
+export const actionCleanSearchResults = () => ({
+  type: ACTIONS.BITCHUTE_CLEAN_SEARCH_RESULTS,
+});
+export const actionBitchuteAppendToFeed = ({ name, data }) => ({
+  type: ACTIONS.BITCHUTE_APPEND_TO_FEED,
+  payload: { name, data },
 });

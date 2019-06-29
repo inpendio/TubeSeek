@@ -1,7 +1,7 @@
 import React, { useState, memo } from 'react';
 import { View } from 'react-native';
-import { Button, Card, Image } from 'react-native-elements';
-import { BitchuteLogout } from 'components';
+import { Card, Image } from 'react-native-elements';
+import { Button, BitchuteLogout } from 'components';
 import { useDispatch } from 'react-redux';
 import { Scene } from 'react-native-magic-move';
 import { bitchuteLogo } from 'assets';

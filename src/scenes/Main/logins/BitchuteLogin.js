@@ -1,13 +1,13 @@
 import React, { useState, memo } from 'react';
 import { View as RNView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  Input, Button, Image, CheckBox,
-} from 'react-native-elements';
+import { Input, Image, CheckBox } from 'react-native-elements';
 import { View, Scene } from 'react-native-magic-move';
 import { setBitchuteLoginData } from 'utils';
 import { bitchuteLogo } from 'assets';
-import { LoginWebView, Loader, Text } from 'components';
+import {
+  LoginWebView, Button, Loader, Text,
+} from 'components';
 import { actionAddBitchuteLoginData, actionBitchuteReloadAll } from 'store';
 import styles from './styles';
 

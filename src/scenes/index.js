@@ -1,16 +1,16 @@
-import React from "react";
-import { createDrawerNavigator, createAppContainer } from "react-navigation";
-import { Drawer } from "layouts";
+import React from 'react';
+import { createDrawerNavigator, createAppContainer } from 'react-navigation';
+import { Drawer, Header } from 'layouts';
 
-import Main from "./Main";
+import Main from './Main';
 
 const drawerNAvigation = createDrawerNavigator(
   {
-    Main
+    Main,
   },
   {
-    contentComponent: Drawer
-  }
+    contentComponent: Drawer,
+  },
 );
 
 export default createAppContainer(drawerNAvigation);

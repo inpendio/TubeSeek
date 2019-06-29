@@ -1,13 +1,14 @@
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 import { View } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { Icon } from 'react-native-elements';
+import { Icon, Input } from 'react-native-elements';
 import { actionBitchuteReloadAll, actionToggleLoading } from 'store';
 import { Loader } from 'components';
 import { colors } from 'config';
 import styles from './styles';
 
-function HeaderRight({ navigation: { openDrawer } }) {
+function HeaderRight({ navigation: { openDrawer, navigate } }) {
+  const [search, setSearch] = useState(false);
   const dispatch = useDispatch();
   const isLoading = useSelector(s => s.general.loading);
   const currentView = useSelector(s => s.general.view);
@@ -20,6 +21,14 @@ function HeaderRight({ navigation: { openDrawer } }) {
   };
   return (
     <View style={styles.wrapper}>
+      <Icon
+        containerStyle={[styles.icon]}
+        color={colors.black}
+        name="search"
+        onPress={() => {
+          navigate('Search');
+        }}
+      />
       {isLoading ? (
         <Loader
           size={18}

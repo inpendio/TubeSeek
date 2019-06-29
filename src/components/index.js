@@ -7,3 +7,4 @@ export { default as Tabs } from './Tabs';
 export { default as VideoModal } from './VideoModal';
 export { default as Accordion } from './Accordion';
 export { default as TextBlock } from './TextBlock';
+export { default as Button } from './Button';

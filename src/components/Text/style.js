@@ -5,6 +5,7 @@ export const styles = StyleSheet.create({
   base: {
     fontSize: 13,
     color: c.black,
+    fontFamily: 'Roboto',
   },
 });
 export const sizes = StyleSheet.create({
@@ -46,6 +47,12 @@ export const colors = StyleSheet.create({
   },
 });
 
+export const decorators = StyleSheet.create({
+  b: { fontWeight: 'bold' },
+  em: { fontStyle: 'italic' },
+  center: { textAlign: 'center' },
+});
+
 export const sizeMap = [
   'h1',
   'h2',
@@ -57,3 +64,4 @@ export const sizeMap = [
   'body4',
 ];
 export const colorMap = ['primary', 'secondary', 'error', 'success'];
+export const decoratorMap = ['em', 'b', 'center'];

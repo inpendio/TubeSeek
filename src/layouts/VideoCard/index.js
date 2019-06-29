@@ -23,19 +23,21 @@ function VideoCard({ navigation: { navigate }, item }) {
             resizeMode="cover"
             source={{ uri: item.thumbnail }}
           />
-          <Text
-            style={{
-              backgroundColor: colors.primary,
-              color: colors.white,
-              paddingVertical: 3,
-              paddingHorizontal: 5,
-              position: 'absolute',
-              top: 0,
-              right: 0,
-            }}
-          >
-            {item.duration}
-          </Text>
+          {!!item.duration && (
+            <Text
+              style={{
+                backgroundColor: colors.primary,
+                color: colors.white,
+                paddingVertical: 3,
+                paddingHorizontal: 5,
+                position: 'absolute',
+                top: 0,
+                right: 0,
+              }}
+            >
+              {item.duration}
+            </Text>
+          )}
           <RNView
             style={{
               backgroundColor: colors.primary,
@@ -67,7 +69,15 @@ function VideoCard({ navigation: { navigate }, item }) {
         </TouchableOpacity>
       </RNView>
       <RNView style={{ paddingHorizontal: 10, paddingVertical: 7 }}>
-        <Text h3>{item.text}</Text>
+        <Text
+          h3
+          onPress={() => {
+            dispatch(actionFetchBitchuteVideoSource(item));
+            navigate('Video', { imageUrl: item.thumbnail });
+          }}
+        >
+          {item.text}
+        </Text>
         <RNView
           style={{
             flexDirection: 'row',
@@ -79,9 +89,16 @@ function VideoCard({ navigation: { navigate }, item }) {
           <Text body4 style={{ color: colors.secondary }}>
             {item.timePublished}
           </Text>
-          <Text body2 style={{ padding: 5, color: colors.primary }}>
-            {item.channel.name}
-          </Text>
+          {item.channel && item.channel.name && (
+            <Text
+              body2
+              style={{ padding: 5, color: colors.primary }}
+              onPress={() => navigate('BitchuteChannelView', { url: item.channel.link })
+              }
+            >
+              {item.channel.name}
+            </Text>
+          )}
         </RNView>
       </RNView>
     </Card>

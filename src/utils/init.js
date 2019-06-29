@@ -1,3 +1,4 @@
+import { UIManager, Platform } from 'react-native';
 import {
   actionAddBitchuteLoginData,
   actionToggleLoading,
@@ -7,6 +8,11 @@ import { getBitchuteLoginData } from './localStorage';
 import orientation from './orientation';
 
 export default async function ({ dispatch }) {
+  if (
+    Platform.OS === 'android'
+    && UIManager.setLayoutAnimationEnabledExperimental
+  ) UIManager.setLayoutAnimationEnabledExperimental(true);
+
   orientation({ dispatch });
   const loginData = await getBitchuteLoginData();
   if (loginData && loginData.key && loginData.password) {

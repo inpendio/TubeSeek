@@ -1,7 +1,13 @@
 import React, { memo } from 'react';
 import { Text as RNText } from 'react-native';
 import {
-  sizeMap, colorMap, sizes, colors, styles,
+  sizeMap,
+  colorMap,
+  sizes,
+  colors,
+  styles,
+  decoratorMap,
+  decorators,
 } from './style';
 
 function Text(props) {
@@ -14,6 +20,9 @@ function Text(props) {
   });
   colorMap.forEach((s) => {
     if (props[s]) combineStyles.push(colors[s]);
+  });
+  decoratorMap.forEach((s) => {
+    if (props[s]) combineStyles.push(decorators[s]);
   });
   if (style) combineStyles.push(style);
   return (

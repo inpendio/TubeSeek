@@ -6,7 +6,7 @@ import Video from 'react-native-video';
 
 import { useSelector } from 'react-redux';
 import { Accordion, TextBlock, Loader } from 'components';
-import { BitchuteChannelView } from 'layouts';
+import { BitchuteChannelInfoCard } from 'layouts';
 import { colors } from 'config';
 import BitchuteNexVideos from '../BitchuteNexVideos';
 
@@ -23,7 +23,13 @@ function BitchuteVideoView({ navigation, thumbnail }) {
           controls
           resizeMode="contain"
           fullscreenOrientation="all"
-          fullscreen
+          // fullscreen
+          onBuffer={(b) => {
+            console.log(b);
+          }}
+          onError={(e) => {
+            console.log(e);
+          }}
         />
       ) : (
         <Image
@@ -103,7 +109,12 @@ function BitchuteVideoView({ navigation, thumbnail }) {
             </RNView>
           }
         </Accordion>
-        {videoMeta.channel && <BitchuteChannelView data={videoMeta.channel} />}
+        {videoMeta.channel && (
+          <BitchuteChannelInfoCard
+            data={videoMeta.channel}
+            navigation={navigation}
+          />
+        )}
         <BitchuteNexVideos navigation={navigation} current={videoMeta} />
       </ScrollView>
     </RNView>

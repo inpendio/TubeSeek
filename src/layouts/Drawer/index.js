@@ -1,10 +1,15 @@
 import React, { memo, useState, useEffect } from 'react';
 import { View as RNView, TouchableOpacity, Image } from 'react-native';
 import { View } from 'react-native-magic-move';
-import { Text, Button, Icon } from 'react-native-elements';
+import { Text, /* Button,  */ Icon } from 'react-native-elements';
 import { bitchuteLogo, logoFull } from 'assets';
 import { useSelector } from 'react-redux';
-import { FeedWebView, BitchuteVideoFetcher, BitchuteSearch } from 'components';
+import {
+  FeedWebView,
+  BitchuteVideoFetcher,
+  BitchuteSearch,
+  Button,
+} from 'components';
 
 import styles from './styles';
 
@@ -31,6 +36,15 @@ function Drawer(props) {
           }}
         >
           <Image source={logoFull} resizeMode="contain" style={styles.logo} />
+        </RNView>
+        <RNView style={{ marginTop: 30 }}>
+          <Button
+            title="Subscriptions"
+            type="clear"
+            onPress={() => {
+              navigate('BitchuteSubscriptions');
+            }}
+          />
         </RNView>
       </RNView>
       {!!bitchuteVideoFetch && (
