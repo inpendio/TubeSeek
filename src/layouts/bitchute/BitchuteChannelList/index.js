@@ -1,7 +1,7 @@
 import React, { useState, memo } from 'react';
 import { FlatList } from 'react-native';
 import { Loader, BitchuteSubscriptionList } from 'components';
-import ChannelCard from '../ChannelCard';
+import ChannelCard from '../../ChannelCard';
 
 function BitchuteChannelList({ navigation: { navigate } }) {
   const [list, setList] = useState(null);

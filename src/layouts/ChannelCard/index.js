@@ -10,7 +10,7 @@ function ChannelCard({
     <Card
       style={{ flexDirection: 'row' }}
       onPress={() => {
-        navigate('BitchuteChannelView', { url: link });
+        navigate('ChannelView', { url: link });
       }}
     >
       <Avatar size="large" source={{ uri: image }} />

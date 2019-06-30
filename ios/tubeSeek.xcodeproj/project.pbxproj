@@ -67,6 +67,7 @@
 		2A732FBD031F4573A09CF064 /* libRNShare.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 39EA8D421F4D4DD6A3221215 /* libRNShare.a */; };
 		2ACBC81FC49A4515973DD37D /* libRNFirebase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5880B2A8D0324C6D83A8C95A /* libRNFirebase.a */; };
 		D8AD23C66C5A48519EA5DC08 /* libRNFBAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5AF4243514941BFA5C53820 /* libRNFBAnalytics.a */; };
+		5763EAE16FD04B358B958E54 /* libWatermelonDB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B4558F088F48481E94734D0E /* libWatermelonDB.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -413,6 +414,8 @@
 		5880B2A8D0324C6D83A8C95A /* libRNFirebase.a */ = {isa = PBXFileReference; name = "libRNFirebase.a"; path = "libRNFirebase.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		DD7BF2D1EA3B4CB8B8AB94BD /* RNFBAnalytics.xcodeproj */ = {isa = PBXFileReference; name = "RNFBAnalytics.xcodeproj"; path = "../node_modules/@react-native-firebase/analytics/ios/RNFBAnalytics.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		A5AF4243514941BFA5C53820 /* libRNFBAnalytics.a */ = {isa = PBXFileReference; name = "libRNFBAnalytics.a"; path = "libRNFBAnalytics.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		4ABABC44F52D4F3586A48B7F /* WatermelonDB.xcodeproj */ = {isa = PBXFileReference; name = "WatermelonDB.xcodeproj"; path = "../node_modules/@nozbe/watermelondb/native/ios/WatermelonDB.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		B4558F088F48481E94734D0E /* libWatermelonDB.a */ = {isa = PBXFileReference; name = "libWatermelonDB.a"; path = "libWatermelonDB.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -452,6 +455,7 @@
 				2A732FBD031F4573A09CF064 /* libRNShare.a in Frameworks */,
 				2ACBC81FC49A4515973DD37D /* libRNFirebase.a in Frameworks */,
 				D8AD23C66C5A48519EA5DC08 /* libRNFBAnalytics.a in Frameworks */,
+				5763EAE16FD04B358B958E54 /* libWatermelonDB.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -654,6 +658,7 @@
 				7851BBBF6F1D43E09265B46D /* RNShare.xcodeproj */,
 				B08706B7305B4A689E947AF3 /* RNFirebase.xcodeproj */,
 				DD7BF2D1EA3B4CB8B8AB94BD /* RNFBAnalytics.xcodeproj */,
+				4ABABC44F52D4F3586A48B7F /* WatermelonDB.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1333,6 +1338,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1347,6 +1353,7 @@
 					"$(SRCROOT)/../node_modules/react-native-share/ios",
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 					"$(SRCROOT)/../node_modules/@react-native-firebase/analytics/ios/RNFBAnalytics",
+					"$(SRCROOT)/../node_modules/@nozbe/watermelondb/native/ios/WatermelonDB/SupportingFiles/**",
 				);
 			};
 			name = Debug;
@@ -1381,6 +1388,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1395,6 +1403,7 @@
 					"$(SRCROOT)/../node_modules/react-native-share/ios",
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 					"$(SRCROOT)/../node_modules/@react-native-firebase/analytics/ios/RNFBAnalytics",
+					"$(SRCROOT)/../node_modules/@nozbe/watermelondb/native/ios/WatermelonDB/SupportingFiles/**",
 				);
 			};
 			name = Release;
@@ -1428,6 +1437,7 @@
 					"$(SRCROOT)/../node_modules/react-native-share/ios",
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 					"$(SRCROOT)/../node_modules/@react-native-firebase/analytics/ios/RNFBAnalytics",
+					"$(SRCROOT)/../node_modules/@nozbe/watermelondb/native/ios/WatermelonDB/SupportingFiles/**",
 				);
 			};
 			name = Debug;
@@ -1460,6 +1470,7 @@
 					"$(SRCROOT)/../node_modules/react-native-share/ios",
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 					"$(SRCROOT)/../node_modules/@react-native-firebase/analytics/ios/RNFBAnalytics",
+					"$(SRCROOT)/../node_modules/@nozbe/watermelondb/native/ios/WatermelonDB/SupportingFiles/**",
 				);
 			};
 			name = Release;
@@ -1502,6 +1513,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1516,6 +1528,7 @@
 					"$(SRCROOT)/../node_modules/react-native-share/ios",
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 					"$(SRCROOT)/../node_modules/@react-native-firebase/analytics/ios/RNFBAnalytics",
+					"$(SRCROOT)/../node_modules/@nozbe/watermelondb/native/ios/WatermelonDB/SupportingFiles/**",
 				);
 			};
 			name = Debug;
@@ -1558,6 +1571,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1572,6 +1586,7 @@
 					"$(SRCROOT)/../node_modules/react-native-share/ios",
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 					"$(SRCROOT)/../node_modules/@react-native-firebase/analytics/ios/RNFBAnalytics",
+					"$(SRCROOT)/../node_modules/@nozbe/watermelondb/native/ios/WatermelonDB/SupportingFiles/**",
 				);
 			};
 			name = Release;
@@ -1613,6 +1628,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1627,6 +1643,7 @@
 					"$(SRCROOT)/../node_modules/react-native-share/ios",
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 					"$(SRCROOT)/../node_modules/@react-native-firebase/analytics/ios/RNFBAnalytics",
+					"$(SRCROOT)/../node_modules/@nozbe/watermelondb/native/ios/WatermelonDB/SupportingFiles/**",
 				);
 			};
 			name = Debug;
@@ -1668,6 +1685,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1682,6 +1700,7 @@
 					"$(SRCROOT)/../node_modules/react-native-share/ios",
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 					"$(SRCROOT)/../node_modules/@react-native-firebase/analytics/ios/RNFBAnalytics",
+					"$(SRCROOT)/../node_modules/@nozbe/watermelondb/native/ios/WatermelonDB/SupportingFiles/**",
 				);
 			};
 			name = Release;

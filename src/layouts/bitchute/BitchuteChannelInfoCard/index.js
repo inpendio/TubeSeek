@@ -20,7 +20,7 @@ function BitchuteChannelInfoCard({ data, navigation: { navigate } }) {
           onPress={
             data.name.link
               ? () => {
-                navigate('BitchuteChannelView', { url: data.name.link });
+                navigate('ChannelView', { url: data.name.link });
               }
               : () => {}
           }

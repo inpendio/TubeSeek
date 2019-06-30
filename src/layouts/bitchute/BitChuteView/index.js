@@ -1,9 +1,8 @@
 import React, { useState, memo } from 'react';
-import { FlatList, ScrollView } from 'react-native';
+import { FlatList } from 'react-native';
 import { useSelector } from 'react-redux';
-import { Tabs, BitchuteFeedLoadMore } from 'components';
-import VideoCard from '../VideoCard';
-import EmptyCard from '../EmptyCard';
+import { Tabs, BitchuteFeedLoadMore, EmptyCard } from 'components';
+import VideoCard from '../../VideoCard';
 
 import { TABS, FEEDS } from './constants';
 
@@ -11,6 +10,7 @@ function BitchuteView({ navigation }) {
   const [tab, setTab] = useState(0);
   const [loadMore, setLoadMore] = useState(null);
   const feed = useSelector(state => state.bitchute.feed[FEEDS[tab]]);
+  console.log(feed);
   return (
     <>
       <FlatList
@@ -18,7 +18,12 @@ function BitchuteView({ navigation }) {
         ListHeaderComponent={<Tabs tabs={TABS} onChange={setTab} index={tab} />}
         keyExtractor={item => item.videoLink}
         renderItem={({ item }) => (
-          <VideoCard navigation={navigation} item={item} />
+          <VideoCard
+            navigation={navigation}
+            item={item}
+            feed={FEEDS[tab]}
+            provider="bitchute"
+          />
         )}
         ListEmptyComponent={<EmptyCard />}
         onEndReached={() => {

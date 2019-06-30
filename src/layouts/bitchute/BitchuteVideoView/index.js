@@ -1,7 +1,6 @@
 import React from 'react';
 import { Image, View as RNView, ScrollView } from 'react-native';
 import { Text, Icon } from 'react-native-elements';
-import { Scene, View } from 'react-native-magic-move';
 import Video from 'react-native-video';
 
 import { useSelector } from 'react-redux';
@@ -15,11 +14,11 @@ function BitchuteVideoView({ navigation, thumbnail }) {
   const videoMeta = useSelector(s => s.video.meta);
 
   return (
-    <RNView style={{ flex: 1 /* , backgroundColor: 'yellow' */ }}>
+    <RNView style={{ flex: 1 }}>
       {videoLink ? (
         <Video
           source={{ uri: videoLink }}
-          style={{ height: 250 /* , width: '100%' */ }}
+          style={{ height: 250 }}
           controls
           resizeMode="contain"
           fullscreenOrientation="all"

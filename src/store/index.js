@@ -31,6 +31,7 @@ export {
   actionAppendSearchResults,
   actionCleanSearchResults,
   actionBitchuteAppendToFeed,
+  actionBitchuteAddToQueue,
 } from './bitchute';
 
 export { actionToggleLoading, addOrientationData } from './general';

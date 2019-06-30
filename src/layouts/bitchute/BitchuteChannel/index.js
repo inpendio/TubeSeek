@@ -10,7 +10,7 @@ import {
   Button,
 } from 'components';
 import { Avatar, Icon } from 'react-native-elements';
-import VideoCard from '../VideoCard';
+import VideoCard from '../../VideoCard';
 
 function BitchuteChannel({ navigation }) {
   const {

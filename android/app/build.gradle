@@ -100,6 +100,11 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    
+    packagingOptions {
+       pickFirst '**/libjsc.so'
+       pickFirst '**/libc++_shared.so'
+    }
 
     defaultConfig {
         applicationId "com.tubeseek"
@@ -149,7 +154,10 @@ android {
 }
 
 dependencies {
+    // Make sure to put android-jsc at the top
+    implementation "org.webkit:android-jsc:r241213"
     //implementation project(':@react-native-firebase_analytics')
+    implementation project(':react-native-interactable')
     implementation project(':react-native-firebase')
     implementation project(':react-native-share')
     implementation project(':@react-native-community_async-storage')

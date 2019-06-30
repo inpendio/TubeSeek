@@ -4,5 +4,6 @@
     "error":"#DB3A34",
     "success":"#4EA327",
     "black":"#323031",
-    "white":"#F2F2F2"
+    "white":"#F2F2F2",
+    "gray1":"#bbb"
 }

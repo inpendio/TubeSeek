@@ -7,8 +7,11 @@
     "test": "jest"
   },
   "dependencies": {
+    "@nozbe/watermelondb": "^0.12.3",
+    "@nozbe/with-observables": "^1.0.3",
     "@react-native-community/async-storage": "^1.5.0",
     "@react-native-firebase/analytics": "^0.0.26",
+    "jsc-android": "^241213.1.0",
     "react": "16.8.3",
     "react-native": "0.59.9",
     "react-native-elements": "^1.1.0",
@@ -32,6 +35,7 @@
   "devDependencies": {
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.5",
+    "@babel/plugin-proposal-decorators": "^7.4.4",
     "@babel/runtime": "^7.4.5",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^24.8.0",

@@ -2,7 +2,7 @@ import React, { useState, memo } from 'react';
 import { FlatList, View } from 'react-native';
 import { useSelector } from 'react-redux';
 import { Tabs } from 'components';
-import VideoCard from '../VideoCard';
+import VideoCard from '../../VideoCard';
 
 import { TABS, FEEDS } from './constants';
 
