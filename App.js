@@ -2,6 +2,7 @@ import React, { memo } from 'react';
 
 import { Provider } from 'react-native-magic-move';
 import { Provider as ReduxProvider } from 'react-redux';
+import { VideoModal } from 'components';
 import Scenes from 'scenes';
 import store from 'store';
 import {
@@ -24,8 +25,8 @@ function App() {
   // parseLoginToken();
   return (
     <ReduxProvider store={store}>
-      {/* <VideoModal /> */}
       <Provider>
+        <VideoModal />
         <Scenes />
       </Provider>
     </ReduxProvider>

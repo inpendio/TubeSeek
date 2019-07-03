@@ -13,10 +13,9 @@ import { colors } from 'config';
 import {
   actionFetchBitchuteVideoSource,
   actionBitchuteAddToQueue,
+  actionBitchuteRemoveToQueue,
 } from 'store';
 import Interactable from 'react-native-interactable';
-
-const AnimatedIcon = Animated.createAnimatedComponent(Icon);
 
 function VideoCard({
   navigation: { navigate }, item, feed, provider,
@@ -26,21 +25,25 @@ function VideoCard({
   const addToQueue = () => {
     if (provider === 'bitchute') {
       dispatch(actionBitchuteAddToQueue({ item, feed }));
-      Animated.spring(adToQueueIconAnimation, {
-        toValue: 4,
-        duration: 500,
-        useNativeDriver: true,
-      }).start();
+    }
+  };
+  const removeFromQueue = () => {
+    if (provider === 'bitchute') {
+      dispatch(actionBitchuteRemoveToQueue({ item, feed }));
     }
   };
 
   return (
     <Interactable.View
       horizontalOnly
-      alertAreas={[{ id: 'addQueue', influenceArea: { right: -60 } }]}
-      onAlert={({ nativeEvent: { addQueue } }) => {
-        console.log('alert!!', addQueue);
+      alertAreas={[
+        { id: 'addQueue', influenceArea: { right: -150 } },
+        { id: 'removeQueue', influenceArea: { left: 150 } },
+      ]}
+      onAlert={({ nativeEvent: { addQueue, removeQueue } }) => {
+        console.log('alert!!', { addQueue, removeQueue });
         if (addQueue === 'enter') addToQueue();
+        if (removeQueue === 'enter') removeFromQueue();
       }}
       snapPoints={[{ x: 0 }, { x: 0 }]}
 
@@ -140,24 +143,12 @@ function VideoCard({
           <RNView
             style={{ flexDirection: 'row', justifyContent: 'space-around' }}
           >
-            <Animated.View
-              style={{
-                transform: [
-                  {
-                    scale: adToQueueIconAnimation.interpolate({
-                      inputRange: [0, 1, 2, 3, 4],
-                      outputRange: [1, 1.2, 1, 0.8, 1],
-                    }),
-                  },
-                ],
-              }}
-            >
-              <Icon
-                name="queue"
-                type="material"
-                color={item.inQueue ? colors.success : colors.gray1}
-              />
-            </Animated.View>
+            <Icon
+              name="queue"
+              type="material"
+              color={item.inQueue ? colors.success : colors.gray1}
+              onPress={item.inQueue ? removeFromQueue : addToQueue}
+            />
           </RNView>
         </RNView>
       </Card>

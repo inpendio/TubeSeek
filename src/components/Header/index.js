@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { Icon } from 'react-native-elements';
-import { actionCleanSearchResults } from 'store';
+import { actionCleanSearchResults, actionCleanVideo } from 'store';
 import { colors } from 'config';
 import HeaderRight from '../HeaderRight';
 
@@ -28,6 +28,7 @@ function Header({ navigation, initialRoute }) {
 
   const goBack = () => {
     if (routeName === 'Search') dispatch(actionCleanSearchResults());
+    if (routeName === 'Video') dispatch(actionCleanVideo());
     pop();
   };
 

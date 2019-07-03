@@ -1,15 +1,43 @@
 import React, { memo } from 'react';
-import { View as RNView } from 'react-native';
+import { View as RNView, Image } from 'react-native';
 import Modal from 'react-native-modal';
-/* import Video from 'react-native-video';
- */ import { useSelector, useDispatch } from 'react-redux';
+import Video from 'react-native-video';
+import { useSelector, useDispatch } from 'react-redux';
 import { actionCleanVideo } from 'store';
+import Text from '../Text';
 
 function VideoModal() {
   const videoLink = useSelector(s => s.video.link);
   const meta = useSelector(s => s.video.meta);
   const dispatch = useDispatch();
+  if (!meta) return null;
   return (
+    <RNView
+      style={{
+        height: 300,
+        position: 'absolute',
+        top: 56,
+        left: 0,
+        right: 0,
+        zIndex: 9999,
+      }}
+    >
+      {videoLink ? (
+        <Video
+          source={{ uri: videoLink }}
+          style={{ height: 300, width: '100%' }}
+          controls
+        />
+      ) : (
+        <Image
+          source={{ uri: meta && meta.thumbnail }}
+          style={{ height: 300 }}
+          resizeMode="contain"
+        />
+      )}
+    </RNView>
+  );
+  /* return (
     <Modal
       isVisible={!!meta}
       avoidKeyboard
@@ -26,7 +54,7 @@ function VideoModal() {
       }}
     >
       <RNView style={{ flex: 1, backgroundColor: 'red', height: 300 }}>
-        {/* videoLink ? (
+        {videoLink ? (
           <Video
             source={{ uri: videoLink }}
             style={{ height: 300, width: '100%' }}
@@ -38,10 +66,10 @@ function VideoModal() {
             style={{ height: 300 }}
             resizeMode="contain"
           />
-        ) */}
+        )}
       </RNView>
     </Modal>
-  );
+  ); */
 }
 
 export default memo(VideoModal);

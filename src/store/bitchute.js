@@ -13,6 +13,7 @@ export const ACTIONS = {
   BITCHUTE_CLEAN_SEARCH_RESULTS: '(.)bitchute_clean_search_results(.)',
   BITCHUTE_APPEND_TO_FEED: '(.)bitchute_append_to_feed(.)',
   BITCHUTE_ADD_TO_QUEUE: '(.)bitchute_add_to_queue-->(.)',
+  BITCHUTE_REMOVE_TO_QUEUE: '(.)bitchute_remove_to_queue<--(.)',
 };
 
 const initialStore = {
@@ -117,6 +118,23 @@ export default function (store = initialStore, action) {
       }
       return newStore;
     }
+    case ACTIONS.BITCHUTE_REMOVE_TO_QUEUE: {
+      const newStore = store;
+      const { item, feed } = action;
+      newStore.feed[feed] = [...store.feed[feed]];
+      for (let i = 0; i < newStore.feed[feed].length; i++) {
+        if (newStore.feed[feed][i].videoLink === item.videoLink) {
+          newStore.feed[feed][i] = {
+            ...newStore.feed[feed][i],
+            inQueue: false,
+          };
+          // TODO:
+          // add to some db
+          break;
+        }
+      }
+      return newStore;
+    }
     default:
       return store;
   }
@@ -166,6 +184,11 @@ export const actionBitchuteAppendToFeed = ({ name, data }) => ({
 
 export const actionBitchuteAddToQueue = ({ item, feed }) => ({
   type: ACTIONS.BITCHUTE_ADD_TO_QUEUE,
+  feed,
+  item,
+});
+export const actionBitchuteRemoveToQueue = ({ item, feed }) => ({
+  type: ACTIONS.BITCHUTE_REMOVE_TO_QUEUE,
   feed,
   item,
 });

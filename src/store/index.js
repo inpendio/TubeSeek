@@ -32,6 +32,7 @@ export {
   actionCleanSearchResults,
   actionBitchuteAppendToFeed,
   actionBitchuteAddToQueue,
+  actionBitchuteRemoveToQueue,
 } from './bitchute';
 
 export { actionToggleLoading, addOrientationData } from './general';

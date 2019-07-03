@@ -14,8 +14,8 @@ function BitchuteVideoView({ navigation, thumbnail }) {
   const videoMeta = useSelector(s => s.video.meta);
 
   return (
-    <RNView style={{ flex: 1 }}>
-      {videoLink ? (
+    <RNView style={{ flex: 1, marginTop: 300 }}>
+      {/* videoLink ? (
         <Video
           source={{ uri: videoLink }}
           style={{ height: 250 }}
@@ -36,8 +36,8 @@ function BitchuteVideoView({ navigation, thumbnail }) {
           style={{ height: 250, width: '100%' }}
           resizeMode="contain"
         />
-      )}
-      {!videoLink && (
+      ) */}
+      {/* !videoLink && (
         <Loader
           style={{
             width: '100%',
@@ -47,7 +47,7 @@ function BitchuteVideoView({ navigation, thumbnail }) {
           }}
           size="large"
         />
-      )}
+      ) */}
       <ScrollView
         style={{
           paddingVertical: 10,
