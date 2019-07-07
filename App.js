@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 
 import { Provider } from 'react-native-magic-move';
 import { Provider as ReduxProvider } from 'react-redux';
-import { VideoModal } from 'components';
+import { VideoModal } from 'layouts';
 import Scenes from 'scenes';
 import store from 'store';
 import {

@@ -54,7 +54,7 @@ function VideoCard({
           <TouchableOpacity
             onPress={() => {
               dispatch(actionFetchBitchuteVideoSource(item));
-              navigate('Video', { imageUrl: item.thumbnail });
+              // navigate('Video', { imageUrl: item.thumbnail });
             }}
           >
             <Image
@@ -112,7 +112,7 @@ function VideoCard({
             h3
             onPress={() => {
               dispatch(actionFetchBitchuteVideoSource(item));
-              navigate('Video', { imageUrl: item.thumbnail });
+              // navigate('Video', { imageUrl: item.thumbnail });
             }}
           >
             {item.text}

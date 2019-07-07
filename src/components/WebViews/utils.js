@@ -61,23 +61,36 @@ function getChannelData(){
   var cname = cbanner.getElementsByClassName("name")[0].getElementsByTagName("a")[0];
   var cowner = cbanner.getElementsByClassName("owner")[0].getElementsByTagName("a")[0];
   var subCount = document.getElementById("subscriber_count");
-  out.name={text:cname.textContent, link:cname.href};
+  out.name = cname.textContent;
+  out.link = cname.href;
   out.owner={text:cowner.textContent,link:cowner.href};
   out.subCount=subCount.textContent;
   return out;
   }
 `;
 
+const JS_BITCHUTE_GET_OTHER_META = `
+function getOtherMeta(){
+  var out={};
+  var magnetLink = document.querySelector("a[data-original-title='Magnet Link']");
+  out.magnetLink = magnetLink.href;
+
+  return out;
+}
+`;
+
 const JS_BITCHUTE_GET_VIDEO_META = `
+${JS_BITCHUTE_GET_OTHER_META}
 ${JS_BITCHUTE_GET_DESCRIPTION_TEXT}
 ${JS_BITCHUTE_GET_HASHTAGS}
 ${JS_BITCHUTE_GET_CHANNEL_INFO}
 function getVideoMeta(){
-  return {
+  return Object.assign({},{
     channel:getChannelData(),
     hashtags:getHashTags(),
     description:getDescriptionText()
-  }
+  }, getOtherMeta())
+
 }
 `;
 

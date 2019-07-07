@@ -5896,6 +5896,11 @@ react-navigation-drawer@~1.2.1:
   dependencies:
     react-native-tab-view "^1.2.0"
 
+react-navigation-hooks@^1.0.0-alpha.2:
+  version "1.0.0-alpha.2"
+  resolved "https://registry.yarnpkg.com/react-navigation-hooks/-/react-navigation-hooks-1.0.0-alpha.2.tgz#e44de3790d1f0ba6ff33dc11caa0e55d2a4fc8f7"
+  integrity sha512-G/JlquD3Xs8fYSLywKz6TV+APev8IwHDThU7X9gK2fZnLyk5tX9OeuO4pTpv4jv/tTRcjk7wkKQ+pHI+rFXa/g==
+
 react-navigation-magic-move@^0.4.1:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/react-navigation-magic-move/-/react-navigation-magic-move-0.4.1.tgz#20ab093b409ac03b87c5cc6c26be4e45ce8a61b4"

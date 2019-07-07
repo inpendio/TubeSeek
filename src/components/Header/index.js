@@ -28,8 +28,9 @@ function Header({ navigation, initialRoute }) {
 
   const goBack = () => {
     if (routeName === 'Search') dispatch(actionCleanSearchResults());
-    if (routeName === 'Video') dispatch(actionCleanVideo());
+    
     pop();
+    //if (routeName === 'Video') dispatch(actionCleanVideo());
   };
 
   return (

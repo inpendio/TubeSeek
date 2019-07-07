@@ -7,3 +7,4 @@ export { default as VideoCard } from './VideoCard';
 export { default as BitchuteChannelList } from './bitchute/BitchuteChannelList';
 export { default as BitchuteChannel } from './bitchute/BitchuteChannel'; */
 export * from './bitchute';
+export { default as VideoModal } from './VideoModal';

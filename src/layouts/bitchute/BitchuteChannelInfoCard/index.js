@@ -1,11 +1,14 @@
 import React, { memo } from 'react';
 import { View } from 'react-native';
 import { Avatar } from 'react-native-elements';
+import { useNavigation } from 'react-navigation-hooks';
 import { Text } from 'components';
 import styles from './styles';
 
-function BitchuteChannelInfoCard({ data, navigation: { navigate } }) {
-  if (!data.name.text) return null;
+function BitchuteChannelInfoCard({ data /* , navigation: { navigate } */ }) {
+  const navigation = useNavigation();
+  console.log(data, navigation);
+  if (!data.name) return null;
   return (
     <View style={[styles.wrapper, styles.box]}>
       <Avatar
@@ -18,9 +21,9 @@ function BitchuteChannelInfoCard({ data, navigation: { navigate } }) {
       <View style={styles.textBlock}>
         <Text
           onPress={
-            data.name.link
+            data.link
               ? () => {
-                navigate('ChannelView', { url: data.name.link });
+                // navigate('ChannelView', { url: data.link });
               }
               : () => {}
           }
@@ -28,7 +31,7 @@ function BitchuteChannelInfoCard({ data, navigation: { navigate } }) {
           style={{ alignItems: 'flex-end', padding: 5 }}
           body1
         >
-          {data.name.text}
+          {data.name}
         </Text>
         <Text key="subs" style={{ alignItems: 'flex-end' }} body1>
           {data.subCount}
