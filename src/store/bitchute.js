@@ -1,4 +1,5 @@
 import { setBitchuteLoginData } from 'utils';
+import { ACTIONS as VIDEO_ACTION } from './video';
 
 export const ACTIONS = {
   ADD_LOGIN_DATA: '(.)add_login_data(.)',
@@ -14,13 +15,14 @@ export const ACTIONS = {
   BITCHUTE_APPEND_TO_FEED: '(.)bitchute_append_to_feed(.)',
   BITCHUTE_ADD_TO_QUEUE: '(.)bitchute_add_to_queue-->(.)',
   BITCHUTE_REMOVE_TO_QUEUE: '(.)bitchute_remove_to_queue<--(.)',
+  BITCHUTE_ADD_PARSED: '(.)bitchute_add_parsed_video(.)',
 };
 
 const initialStore = {
   loggedIn: false,
   loginData: { key: '', password: '' },
+  void: {},
   feed: {
-    void: [],
     popular: [],
     subscribed: [],
     trendingDay: [],
@@ -104,7 +106,7 @@ export default function (store = initialStore, action) {
       newStore.feed[name] = [...store.feed[name], ...data];
       return newStore;
     }
-    case ACTIONS.BITCHUTE_ADD_TO_QUEUE: {
+    case VIDEO_ACTION.ADD_TO_QUEUE: {
       const newStore = store;
       const { item, feed } = action;
       newStore.feed[feed] = [...store.feed[feed]];
@@ -118,7 +120,7 @@ export default function (store = initialStore, action) {
       }
       return newStore;
     }
-    case ACTIONS.BITCHUTE_REMOVE_TO_QUEUE: {
+    case VIDEO_ACTION.REMOVE_FROM_QUEUE: {
       const newStore = store;
       const { item, feed } = action;
       newStore.feed[feed] = [...store.feed[feed]];
@@ -135,6 +137,14 @@ export default function (store = initialStore, action) {
       }
       return newStore;
     }
+    case ACTIONS.BITCHUTE_ADD_PARSED:
+      return {
+        ...store,
+        void: {
+          ...store.void,
+          [action.payload.meta.videoLink]: action.payload,
+        },
+      };
     default:
       return store;
   }
@@ -181,14 +191,7 @@ export const actionBitchuteAppendToFeed = ({ name, data }) => ({
   type: ACTIONS.BITCHUTE_APPEND_TO_FEED,
   payload: { name, data },
 });
-
-export const actionBitchuteAddToQueue = ({ item, feed }) => ({
-  type: ACTIONS.BITCHUTE_ADD_TO_QUEUE,
-  feed,
-  item,
-});
-export const actionBitchuteRemoveToQueue = ({ item, feed }) => ({
-  type: ACTIONS.BITCHUTE_REMOVE_TO_QUEUE,
-  feed,
-  item,
+export const actionBitchuteAddParsedVideo = payload => ({
+  type: ACTIONS.BITCHUTE_ADD_PARSED,
+  payload,
 });

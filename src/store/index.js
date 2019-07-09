@@ -31,14 +31,20 @@ export {
   actionAppendSearchResults,
   actionCleanSearchResults,
   actionBitchuteAppendToFeed,
-  actionBitchuteAddToQueue,
-  actionBitchuteRemoveToQueue,
 } from './bitchute';
 
-export { actionToggleLoading, addOrientationData } from './general';
+export {
+  actionToggleLoading,
+  addOrientationData,
+  addNavigation,
+} from './general';
 
 export {
   actionFetchBitchuteVideoSource,
   actionSetBitchuteVideoSource,
   actionCleanVideo,
+  actionBitchuteAddToQueue,
+  actionBitchuteRemoveToQueue,
+  actionVideoSetCurrentVideo,
+  actionVideoUpdateCurrentVideo,
 } from './video';

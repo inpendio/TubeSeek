@@ -4,11 +4,13 @@ const initialStore = {
   view: 'bitchute',
   orinetation: false,
   dimensions: {},
+  navigation: null,
 };
 
 const ACTIONS = {
   TOGGLE_LOADING: '(_!_)loading(_!_)',
   ADD_ORIENTATION_DATA: '(_!_)orientation(_!_)',
+  ADD_NAVIGATION: '(_!_)add_navigation(_!_)',
 };
 
 export default function (store = initialStore, action) {
@@ -23,6 +25,8 @@ export default function (store = initialStore, action) {
         dimensions: other,
       };
     }
+    case ACTIONS.ADD_NAVIGATION:
+      return { ...store, navigation: action.payload };
     default:
       return store;
   }
@@ -33,5 +37,9 @@ export const actionToggleLoading = () => ({
 });
 export const addOrientationData = payload => ({
   type: ACTIONS.ADD_ORIENTATION_DATA,
+  payload,
+});
+export const addNavigation = payload => ({
+  type: ACTIONS.ADD_NAVIGATION,
   payload,
 });

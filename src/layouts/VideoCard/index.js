@@ -14,6 +14,7 @@ import {
   actionFetchBitchuteVideoSource,
   actionBitchuteAddToQueue,
   actionBitchuteRemoveToQueue,
+  actionVideoSetCurrentVideo,
 } from 'store';
 import Interactable from 'react-native-interactable';
 
@@ -24,13 +25,18 @@ function VideoCard({
   const adToQueueIconAnimation = new Animated.Value(0);
   const addToQueue = () => {
     if (provider === 'bitchute') {
-      dispatch(actionBitchuteAddToQueue({ item, feed }));
+      dispatch(actionBitchuteAddToQueue({ ...item, feed, provider }));
     }
   };
   const removeFromQueue = () => {
     if (provider === 'bitchute') {
-      dispatch(actionBitchuteRemoveToQueue({ item, feed }));
+      dispatch(actionBitchuteRemoveToQueue({ ...item, feed, provider }));
     }
+  };
+  const playVideo = () => {
+    dispatch(actionVideoSetCurrentVideo({ ...item, provider: 'bitchute' }));
+    // dispatch(actionFetchBitchuteVideoSource(item));
+    // navigate('Video', { imageUrl: item.thumbnail });
   };
 
   return (
@@ -51,12 +57,7 @@ function VideoCard({
     >
       <Card>
         <RNView id={item.thumbnail}>
-          <TouchableOpacity
-            onPress={() => {
-              dispatch(actionFetchBitchuteVideoSource(item));
-              // navigate('Video', { imageUrl: item.thumbnail });
-            }}
-          >
+          <TouchableOpacity onPress={playVideo}>
             <Image
               style={{ flex: 1, height: 200 }}
               resizeMode="cover"
@@ -108,13 +109,7 @@ function VideoCard({
           </TouchableOpacity>
         </RNView>
         <RNView style={{ paddingHorizontal: 10, paddingVertical: 7 }}>
-          <Text
-            h3
-            onPress={() => {
-              dispatch(actionFetchBitchuteVideoSource(item));
-              // navigate('Video', { imageUrl: item.thumbnail });
-            }}
-          >
+          <Text h3 onPress={playVideo}>
             {item.text}
           </Text>
           <RNView

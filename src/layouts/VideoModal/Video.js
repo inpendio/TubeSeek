@@ -6,12 +6,11 @@ import { Loader } from 'components';
 
 function VideoBox({ videoLink, thumbnailLink, style }) {
   const orientation = useSelector(s => s.general.dimensions.orientation);
-  const width = useSelector(s => s.general.dimensions.width);
-  if (false) {
+  if (videoLink) {
     return (
       <Video
         source={{ uri: videoLink }}
-        style={[{ width: '100%' }, style]}
+        style={[style]}
         fullscreen={orientation === 'landscape'}
         controls
         playInBackground
@@ -20,10 +19,10 @@ function VideoBox({ videoLink, thumbnailLink, style }) {
     );
   }
   return (
-    <RNView style={[{ flex: 1 }, style]}>
+    <RNView style={[style]}>
       <Image
         source={{ uri: thumbnailLink }}
-        style={[{ width }, style]}
+        style={[style]}
         resizeMode="contain"
       />
       <Loader

@@ -1,63 +1,66 @@
 import React, { memo, useState } from 'react';
-import {
-  View as RNView,
-  Image,
-  LayoutAnimation,
-  ScrollView,
-  StyleSheet,
-} from 'react-native';
-import Modal from 'react-native-modal';
-// import Video from 'react-native-video';
-import { Icon } from 'react-native-elements';
-import { useSelector, useDispatch } from 'react-redux';
-import { actionCleanVideo } from 'store';
+import { LayoutAnimation } from 'react-native';
+
+import { useSelector } from 'react-redux';
 import Interactable from 'react-native-interactable';
-import {
-  Accordion, TextBlock, Loader, Text,
-} from 'components';
-import { BitchuteChannelInfoCard, BitchuteNexVideos } from 'layouts';
-import { colors } from 'config';
 
 import Video from './Video';
 import VideoMeta from './VideoMeta';
+import OutsideControls from './OutsideControls';
+
+const DH = 145;
 
 function VideoModal() {
-  const provider = useSelector(s => s.video.provider);
-  const videoLink = useSelector(s => s.video.link);
-  const videoMeta = useSelector(s => s.video.meta);
+  const video = useSelector(s => s.video.currentVideo);
   const height = useSelector(s => s.general.dimensions.height);
   const width = useSelector(s => s.general.dimensions.width);
   const orientation = useSelector(s => s.general.dimensions.orientation);
-  const dispatch = useDispatch();
   const [styleState, setStyleState] = useState('full');
-  const [whStyle, setWHStyle] = useState({ top: 56 });
-  const [h, setH] = useState(250);
-  if (!videoMeta) return null;
+  if (!video) {
+    if (styleState === 'diminished') setStyleState('full');
+    return null;
+  }
   const FULLSCREEN_PORTRAIT = {
     WRAPPER: {
-      ...StyleSheet.absoluteFill,
+      /* ...StyleSheet.absoluteFill, */
+      position: 'absolute',
+      left: 0,
+      right: 0,
+      top: 0,
+      bottom: 0,
+      paddingBottom: 20,
+      backgroundColor: 'white',
+      justifyContent: 'flex-start',
+      alignItems: 'flex-start',
     },
-    HEIGHT: { height: width * 0.5625 },
-    STYLE_VIDEO: { top: 0 /* , height: width * 0.5625 */ },
-    STYLE_META: { flex: 1 },
+    HEIGHT: { height: width * 0.5625, width },
+    STYLE_VIDEO: { flex: 0 },
+    STYLE_META: {},
+    OUTSIDE_CONTROLS: {
+      position: 'absolute',
+      height: 0,
+      width: 0,
+    },
   };
   const DIMINISHED_PORTRAIT = {
     WRAPPER: {
-      // ...StyleSheet.absoluteFill,
-      // top: height - 240,
-      /* left: 0, */
-      // width: 240,
-      bottom: 0,
-      height: 145,
+      top: height - 300 - DH,
+      height: DH,
+      flexDirection: 'row',
+      // backgroundColor: 'yellow',
+      width,
     },
-    HEIGHT: { height: 145 },
-    STYLE_VIDEO: { flex: 1 /* width: 240, bottom: 300 */ },
+    HEIGHT: { height: DH, width: 260 },
+    STYLE_VIDEO: { flex: 1 },
     STYLE_META: {
       paddingVertical: 0,
       paddingHorizontal: 0,
-      /* flex: 0, */
       position: 'absolute',
       height: 0,
+    },
+    OUTSIDE_CONTROLS: {
+      flex: 1,
+      width: '100%',
     },
   };
   const FULLSCREEN_LANDSCAPE = {
@@ -88,46 +91,37 @@ function VideoModal() {
 
     setStyleState('full');
   };
-  if (!provider) return null;
+  if (!video.provider) return null;
   return (
-    <RNView
+    <Interactable.View
+      key={video.videoLink}
       style={[
-        /* { ...StyleSheet.absoluteFill }, */
-        /* { position: 'absolute', zIndex: 999 }, */
+        {
+          position: 'absolute',
+          zIndex: 9999,
+        },
         styleMap[`${styleState}_${orientation}`].WRAPPER,
       ]}
+      snapPoints={[{ y: 0, id: 'up' }, { y: 300, id: 'down' }]}
+      onSnap={({ nativeEvent }) => {
+        console.log(nativeEvent);
+        if (nativeEvent.id === 'down') transformToBottom();
+        if (nativeEvent.id === 'up') transformToTop();
+      }}
+      onDrag={({ nativeEvent }) => {
+        console.log(nativeEvent);
+      }}
     >
-      <Interactable.View
-        style={[
-          {
-            /* flex: 1, */
-            ...StyleSheet.absoluteFill,
-            zIndex: 9999,
-          },
-        ]}
-        /* snapPoints={[{ y: 0, id: 'up' }, { y: 300, id: 'down' }]}
-        onSnap={({ nativeEvent }) => {
-          console.log(nativeEvent);
-          if (nativeEvent.id === 'down') transformToBottom();
-          if (nativeEvent.id === 'up') transformToTop();
-        }} */
-        snapPoints={[{ x: 0 }, { x: 0 }]}
-        alertAreas={[{ id: 'down', influenceArea: { top: 300 } }]}
-        onAlert={({ nativeEvent: { up, down } }) => {
-          if (down === 'enter') transformToBottom();
-        }}
-        onDrag={({ nativeEvent }) => {
-          console.log(nativeEvent);
-        }}
-      >
-        <Video
-          videoLink={videoLink}
-          thumbnailLink={videoMeta && videoMeta.thumbnail}
-          style={styleMap[`${styleState}_${orientation}`].HEIGHT}
-        />
-      </Interactable.View>
+      <Video
+        videoLink={video.source}
+        thumbnailLink={video.thumbnail}
+        style={styleMap[`${styleState}_${orientation}`].HEIGHT}
+      />
       <VideoMeta style={styleMap[`${styleState}_${orientation}`].STYLE_META} />
-    </RNView>
+      <OutsideControls
+        style={styleMap[`${styleState}_${orientation}`].OUTSIDE_CONTROLS}
+      />
+    </Interactable.View>
   );
 }
 

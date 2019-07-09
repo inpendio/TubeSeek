@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { JS_GET_BITCHUTE_VIDEO_SOURCE } from './utils';
 import styles from './styles';
 
-function BitchuteVideoFetcher({ url }) {
+function BitchuteVideoFetcher({ url, onSuccess }) {
   const dispatch = useDispatch();
   const [html, setHtml] = useState(null);
   if (!html) {
@@ -24,10 +24,12 @@ function BitchuteVideoFetcher({ url }) {
   const onMessage = (event) => {
     let data;
     try {
-      data = JSON.parse(event.nativeEvent.data);
-      dispatch(actionSetBitchuteVideoSource(data));
+      const { source, meta } = JSON.parse(event.nativeEvent.data);
+      console.log({ data, url });
+      // dispatch(actionSetBitchuteVideoSource(data));
+      onSuccess({ ...meta, source });
     } catch (error) {
-      console.log({ error, data: event.nativeEvent.data });
+      console.log({ error, data: event.nativeEvent.data, url });
     }
   };
   if (!html) return null;

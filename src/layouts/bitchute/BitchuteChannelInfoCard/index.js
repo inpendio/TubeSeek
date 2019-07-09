@@ -5,9 +5,7 @@ import { useNavigation } from 'react-navigation-hooks';
 import { Text } from 'components';
 import styles from './styles';
 
-function BitchuteChannelInfoCard({ data /* , navigation: { navigate } */ }) {
-  const navigation = useNavigation();
-  console.log(data, navigation);
+function BitchuteChannelInfoCard({ data, navigation: { navigate } }) {
   if (!data.name) return null;
   return (
     <View style={[styles.wrapper, styles.box]}>
@@ -23,7 +21,7 @@ function BitchuteChannelInfoCard({ data /* , navigation: { navigate } */ }) {
           onPress={
             data.link
               ? () => {
-                // navigate('ChannelView', { url: data.link });
+                navigate('ChannelView', { url: data.link });
               }
               : () => {}
           }
