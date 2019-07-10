@@ -47,4 +47,6 @@ export {
   actionBitchuteRemoveToQueue,
   actionVideoSetCurrentVideo,
   actionVideoUpdateCurrentVideo,
+  actionVideoUpdateQueueItem,
+  actionVideoSetCurrentlyFetching,
 } from './video';

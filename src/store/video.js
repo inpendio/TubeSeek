@@ -8,17 +8,22 @@ export const ACTIONS = {
   REMOVE_FROM_QUEUE: '#__remove_from_queue__#',
   SET_CURRENT_VIDEO: '#__set_current_video__#',
   UPDATE_CURRENT_VIDEO: '#__update_current_video__#',
+  UPDATE_QUEUE_ITEM: '#__update_queue_item__#',
+  SET_CURRENT_FETCHING: '#__set_currently_fetching__#',
 };
 
 const initialState = {
-  provider: undefined,
-  link: undefined,
-  linkToVideoPage: false,
-  meta: undefined,
+  // provider: undefined,
+  // link: undefined,
+  // linkToVideoPage: false,
+  // meta: undefined,
   nextVideo: undefined,
+  fetchQueue: [],
   queue: [],
   currentVideo: null,
-  fetchVideo: null,
+  // fetchVideo: null,
+  cache: {},
+  currentlyFetching: [],
 };
 
 export default function (store = initialState, action) {
@@ -47,16 +52,39 @@ export default function (store = initialState, action) {
     case ACTIONS.CLEAN:
       return { ...store, currentVideo: null };
     case ACTIONS.ADD_TO_QUEUE: {
-      const { queue } = store;
-      if (queue.indexOf(action.item.videoLink) === -1) queue.push(action.item.videoLink);
+      const queue = [...store.queue];
+      const fetchQueue = [...store.fetchQueue];
+      let doesExist = false;
+      const item = action.payload;
+      for (let i = 0; i < queue.length; i++) {
+        if (queue.videoLink === item.videoLink) {
+          doesExist = true;
+          break;
+        }
+      }
+      if (!doesExist) {
+        if (!store.cache[item.videoLink]) {
+          queue.push(item);
+          fetchQueue.push(item.videoLink);
+        } else {
+          queue.push(store.cache[item.videoLink]);
+        }
+      }
       return {
         ...store,
         queue,
+        fetchQueue,
       };
     }
     case ACTIONS.REMOVE_FROM_QUEUE: {
-      const { queue } = store;
-      if (queue.indexOf(action.item.videoLink) !== -1) queue.splice(queue.indexOf(action.item.videoLink), 1);
+      const queue = [...store.queue];
+      const item = action.payload;
+      for (let i = 0; i < queue.length; i++) {
+        if (queue[i].videoLink === item.videoLink) {
+          queue.splice(i, 1);
+          break;
+        }
+      }
       return {
         ...store,
         queue,
@@ -67,11 +95,40 @@ export default function (store = initialState, action) {
         ...store,
         currentVideo: action.payload,
       };
-    case ACTIONS.UPDATE_CURRENT_VIDEO:
+    case ACTIONS.UPDATE_CURRENT_VIDEO: {
+      const cache = { ...store.cache };
+      cache[store.currentVideo.videoLink] = {
+        ...store.currentVideo,
+        ...action.payload,
+      };
       return {
         ...store,
         currentVideo: { ...store.currentVideo, ...action.payload },
+        cache,
       };
+    }
+    case ACTIONS.UPDATE_QUEUE_ITEM: {
+      const queue = [...store.queue];
+      const fetchQueue = [...store.fetchQueue];
+      const item = action.payload;
+      const cache = { ...store.cache };
+
+      for (let i = 0; i < queue.length; i++) {
+        if (queue[i].videoLink === item.videoLink) {
+          const newItem = { ...queue[i], ...item };
+          cache[queue[i].videoLink] = { ...queue[i], ...item };
+          queue[i] = newItem;
+          fetchQueue.splice(fetchQueue.indexOf(item.videoLink), 1);
+          break;
+        }
+      }
+      return {
+        ...store,
+        queue,
+        fetchQueue,
+        cache,
+      };
+    }
     default:
       return store;
   }
@@ -89,15 +146,13 @@ export const actionCleanVideo = payload => ({
   type: ACTIONS.CLEAN,
   payload,
 });
-export const actionBitchuteAddToQueue = ({ item, feed }) => ({
+export const actionBitchuteAddToQueue = payload => ({
   type: ACTIONS.ADD_TO_QUEUE,
-  feed,
-  item,
+  payload,
 });
-export const actionBitchuteRemoveToQueue = ({ item, feed }) => ({
+export const actionBitchuteRemoveToQueue = payload => ({
   type: ACTIONS.REMOVE_FROM_QUEUE,
-  feed,
-  item,
+  payload,
 });
 export const actionVideoSetCurrentVideo = payload => ({
   type: ACTIONS.SET_CURRENT_VIDEO,
@@ -106,5 +161,13 @@ export const actionVideoSetCurrentVideo = payload => ({
 
 export const actionVideoUpdateCurrentVideo = payload => ({
   type: ACTIONS.UPDATE_CURRENT_VIDEO,
+  payload,
+});
+export const actionVideoUpdateQueueItem = payload => ({
+  type: ACTIONS.UPDATE_QUEUE_ITEM,
+  payload,
+});
+export const actionVideoSetCurrentlyFetching = payload => ({
+  type: ACTIONS.SET_CURRENT_FETCHING,
   payload,
 });

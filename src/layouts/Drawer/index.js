@@ -10,7 +10,11 @@ import {
   BitchuteSearch,
   Button,
 } from 'components';
-import { actionVideoUpdateCurrentVideo } from 'store';
+import {
+  actionVideoUpdateCurrentVideo,
+  actionVideoUpdateQueueItem,
+  actionVideoSetCurrentlyFetching,
+} from 'store';
 
 import styles from './styles';
 
@@ -19,18 +23,34 @@ function Drawer(props) {
     navigation: { navigate },
   } = props;
   const dispatch = useDispatch();
+  const [queueUpdate, setQueueUpdate] = useState(null);
   const bitchuteLogin = useSelector(state => state.bitchute.loggedIn);
   const reloadBitchute = useSelector(state => state.bitchute.reloadAll);
   const currentVideo = useSelector(s => s.video.currentVideo);
-  // const bitchuteVideoFetch = useSelector(s => s.video.linkToVideoPage);
+  const currentlyFetching = useSelector(s => s.video.currentlyFetching);
+  const queue = useSelector(s => s.video.fetchQueue);
 
-  // const bitchuteSearch = useSelector(s => s.bitchute.search);
-
-  // if(bitchuteSearch.search)navigate("")
+  if (
+    !!queue[0]
+    && !queueUpdate
+    && currentlyFetching.indexOf(queue[0]) === -1
+  ) {
+    setQueueUpdate({
+      url: queue[0],
+      func: (data) => {
+        dispatch(actionVideoUpdateQueueItem(data));
+        setQueueUpdate(null);
+      },
+    });
+    dispatch(actionVideoSetCurrentlyFetching(queue[0].videoLink));
+  }
 
   const updateCurrentVideo = (data) => {
     dispatch(actionVideoUpdateCurrentVideo(data));
   };
+
+  /* console.log(1, currentVideo);
+  console.log(2, queueUrl); */
 
   return (
     <RNView style={styles.wrapper}>
@@ -55,10 +75,21 @@ function Drawer(props) {
           />
         </RNView>
       </RNView>
-      {!!currentVideo && !currentVideo.source && !!currentVideo.videoLink && (
+      {!!currentVideo
+        && !currentVideo.source
+        && !!currentVideo.videoLink
+        && currentlyFetching.indexOf(currentVideo.videoLink) === -1 && (
+          <BitchuteVideoFetcher
+            key={currentVideo.videoLink}
+            url={currentVideo.videoLink}
+            onSuccess={updateCurrentVideo}
+          />
+      )}
+      {!!queueUpdate && (
         <BitchuteVideoFetcher
-          url={currentVideo.videoLink}
-          onSuccess={updateCurrentVideo}
+          key={queueUpdate.url}
+          url={queueUpdate.url}
+          onSuccess={queueUpdate.func}
         />
       )}
       {reloadBitchute && <FeedWebView />}

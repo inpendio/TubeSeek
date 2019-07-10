@@ -22,12 +22,10 @@ function BitchuteVideoFetcher({ url, onSuccess }) {
       .catch(e => console.log(e));
   }
   const onMessage = (event) => {
-    let data;
     try {
       const { source, meta } = JSON.parse(event.nativeEvent.data);
-      console.log({ data, url });
       // dispatch(actionSetBitchuteVideoSource(data));
-      onSuccess({ ...meta, source });
+      onSuccess({ ...meta, source, videoLink: url });
     } catch (error) {
       console.log({ error, data: event.nativeEvent.data, url });
     }

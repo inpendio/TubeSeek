@@ -108,7 +108,8 @@ export default function (store = initialStore, action) {
     }
     case VIDEO_ACTION.ADD_TO_QUEUE: {
       const newStore = store;
-      const { item, feed } = action;
+      const { feed, provider, ...item } = action.payload;
+      if (provider !== 'bitchute') return store;
       newStore.feed[feed] = [...store.feed[feed]];
       for (let i = 0; i < newStore.feed[feed].length; i++) {
         if (newStore.feed[feed][i].videoLink === item.videoLink) {
@@ -122,7 +123,8 @@ export default function (store = initialStore, action) {
     }
     case VIDEO_ACTION.REMOVE_FROM_QUEUE: {
       const newStore = store;
-      const { item, feed } = action;
+      const { feed, provider, ...item } = action.payload;
+      if (provider !== 'bitchute') return store;
       newStore.feed[feed] = [...store.feed[feed]];
       for (let i = 0; i < newStore.feed[feed].length; i++) {
         if (newStore.feed[feed][i].videoLink === item.videoLink) {

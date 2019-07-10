@@ -3,15 +3,12 @@ import {
   View as RNView,
   Image,
   TouchableOpacity,
-  Animated,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { View } from 'react-native-magic-move';
 import { Icon } from 'react-native-elements';
 import { Card, Text } from 'components';
 import { colors } from 'config';
 import {
-  actionFetchBitchuteVideoSource,
   actionBitchuteAddToQueue,
   actionBitchuteRemoveToQueue,
   actionVideoSetCurrentVideo,
@@ -22,7 +19,6 @@ function VideoCard({
   navigation: { navigate }, item, feed, provider,
 }) {
   const dispatch = useDispatch();
-  const adToQueueIconAnimation = new Animated.Value(0);
   const addToQueue = () => {
     if (provider === 'bitchute') {
       dispatch(actionBitchuteAddToQueue({ ...item, feed, provider }));
@@ -47,13 +43,10 @@ function VideoCard({
         { id: 'removeQueue', influenceArea: { left: 150 } },
       ]}
       onAlert={({ nativeEvent: { addQueue, removeQueue } }) => {
-        console.log('alert!!', { addQueue, removeQueue });
         if (addQueue === 'enter') addToQueue();
         if (removeQueue === 'enter') removeFromQueue();
       }}
       snapPoints={[{ x: 0 }, { x: 0 }]}
-
-      /* animatedValueX={avx} */
     >
       <Card>
         <RNView id={item.thumbnail}>
