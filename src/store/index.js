@@ -49,4 +49,5 @@ export {
   actionVideoUpdateCurrentVideo,
   actionVideoUpdateQueueItem,
   actionVideoSetCurrentlyFetching,
+  actionVideoSetVideoDb,
 } from './video';

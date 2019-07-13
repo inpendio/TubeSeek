@@ -1,4 +1,5 @@
 apply plugin: "com.android.application"
+apply plugin: 'kotlin-android'
 
 import com.android.build.OutputFile
 
@@ -156,6 +157,7 @@ android {
 dependencies {
     // Make sure to put android-jsc at the top
     implementation "org.webkit:android-jsc:r241213"
+    implementation project(':watermelondb')
     //implementation project(':@react-native-firebase_analytics')
     implementation project(':react-native-interactable')
     implementation project(':react-native-firebase')

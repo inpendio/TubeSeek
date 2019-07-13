@@ -19,7 +19,7 @@ function BitchuteVideoFetcher({ url, onSuccess }) {
         // .replace(/<link rel="stylesheet" type="text\/css"[^>]*\/>/gm, '');
         setHtml(finalT);
       })
-      .catch(e => console.log(e));
+      .catch(e => console.log(e, url));
   }
   const onMessage = (event) => {
     try {

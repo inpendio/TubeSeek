@@ -10,6 +10,7 @@ export const ACTIONS = {
   UPDATE_CURRENT_VIDEO: '#__update_current_video__#',
   UPDATE_QUEUE_ITEM: '#__update_queue_item__#',
   SET_CURRENT_FETCHING: '#__set_currently_fetching__#',
+  SET_VIDEO_DB: '#__set_video_db__#',
 };
 
 const initialState = {
@@ -23,7 +24,29 @@ const initialState = {
   currentVideo: null,
   // fetchVideo: null,
   cache: {},
-  currentlyFetching: [],
+  currentlyFetching: undefined,
+  videoDB: null,
+};
+
+/* eslint-disable no-param-reassign */
+const saveVideoToDB = async (db, video) => {
+  console.log('video->db');
+  try {
+    const newVideo = await db.create((v) => {
+      v.text = video.text;
+      v.videoLink = video.videoLink;
+      v.source = video.source;
+      v.thumbnail = video.thumbnail;
+      v.provider = video.thumbnail;
+      v.magnetLink = video.magnetLink;
+      v.channel = JSON.stringify(video.channel);
+      v.hashtags = JSON.stringify(video.hashtags);
+      v.description = JSON.stringify(video.description);
+    });
+    console.log('video->db', newVideo);
+  } catch (error) {
+    console.log('video->db->ERROR', error);
+  }
 };
 
 export default function (store = initialState, action) {
@@ -65,7 +88,10 @@ export default function (store = initialState, action) {
       if (!doesExist) {
         if (!store.cache[item.videoLink]) {
           queue.push(item);
-          fetchQueue.push(item.videoLink);
+          if (
+            !store.currentVideo
+            || store.currentVideo.videoLink !== action.payload.videoLink
+          ) fetchQueue.push(item.videoLink);
         } else {
           queue.push(store.cache[item.videoLink]);
         }
@@ -97,13 +123,15 @@ export default function (store = initialState, action) {
       };
     case ACTIONS.UPDATE_CURRENT_VIDEO: {
       const cache = { ...store.cache };
-      cache[store.currentVideo.videoLink] = {
+      const newVideo = {
         ...store.currentVideo,
         ...action.payload,
       };
+      cache[store.currentVideo.videoLink] = newVideo;
+      saveVideoToDB(store.videoDB, newVideo);
       return {
         ...store,
-        currentVideo: { ...store.currentVideo, ...action.payload },
+        currentVideo: newVideo,
         cache,
       };
     }
@@ -116,8 +144,9 @@ export default function (store = initialState, action) {
       for (let i = 0; i < queue.length; i++) {
         if (queue[i].videoLink === item.videoLink) {
           const newItem = { ...queue[i], ...item };
-          cache[queue[i].videoLink] = { ...queue[i], ...item };
+          cache[queue[i].videoLink] = newItem;
           queue[i] = newItem;
+          saveVideoToDB(store.videoDB, newItem);
           fetchQueue.splice(fetchQueue.indexOf(item.videoLink), 1);
           break;
         }
@@ -129,6 +158,8 @@ export default function (store = initialState, action) {
         cache,
       };
     }
+    case ACTIONS.SET_VIDEO_DB:
+      return { ...store, videoDB: action.payload };
     default:
       return store;
   }
@@ -169,5 +200,9 @@ export const actionVideoUpdateQueueItem = payload => ({
 });
 export const actionVideoSetCurrentlyFetching = payload => ({
   type: ACTIONS.SET_CURRENT_FETCHING,
+  payload,
+});
+export const actionVideoSetVideoDb = payload => ({
+  type: ACTIONS.SET_VIDEO_DB,
   payload,
 });

@@ -14,6 +14,7 @@ module.exports = {
           assets: './src/assets',
           store: './src/store',
           config: './src/config',
+          db: './src/db',
         },
       },
     ],

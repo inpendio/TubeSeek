@@ -30,11 +30,7 @@ function Drawer(props) {
   const currentlyFetching = useSelector(s => s.video.currentlyFetching);
   const queue = useSelector(s => s.video.fetchQueue);
 
-  if (
-    !!queue[0]
-    && !queueUpdate
-    && currentlyFetching.indexOf(queue[0]) === -1
-  ) {
+  if (!!queue[0] && !queueUpdate && !currentlyFetching) {
     setQueueUpdate({
       url: queue[0],
       func: (data) => {
@@ -78,7 +74,7 @@ function Drawer(props) {
       {!!currentVideo
         && !currentVideo.source
         && !!currentVideo.videoLink
-        && currentlyFetching.indexOf(currentVideo.videoLink) === -1 && (
+        && currentlyFetching !== currentVideo.videoLink && (
           <BitchuteVideoFetcher
             key={currentVideo.videoLink}
             url={currentVideo.videoLink}
