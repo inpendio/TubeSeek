@@ -8,6 +8,7 @@ import Subscriptions from './Subscriptions';
 import ChannelView from './ChannelView';
 import Test from './Test';
 import { BitchuteLogin, Logouts } from './logins';
+import Queue from './Queue';
 
 const INITIAL_ROUTE = 'Feed';
 
@@ -21,6 +22,7 @@ export default createStackNavigator(
     Subscriptions,
     ChannelView,
     Test,
+    Queue,
   },
   {
     initialRouteName: INITIAL_ROUTE,

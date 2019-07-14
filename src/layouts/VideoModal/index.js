@@ -108,9 +108,6 @@ function VideoModal() {
         if (nativeEvent.id === 'down') transformToBottom();
         if (nativeEvent.id === 'up') transformToTop();
       }}
-      onDrag={({ nativeEvent }) => {
-        console.log(nativeEvent);
-      }}
     >
       <Video
         videoLink={video.source}

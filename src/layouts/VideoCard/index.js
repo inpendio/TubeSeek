@@ -4,7 +4,7 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Icon } from 'react-native-elements';
 import { Card, Text } from 'components';
 import { colors } from 'config';
@@ -18,6 +18,7 @@ import Interactable from 'react-native-interactable';
 function VideoCard({
   navigation: { navigate }, item, feed, provider,
 }) {
+  const shortQueue = useSelector(s => s.video.shortQueue);
   const dispatch = useDispatch();
   const addToQueue = () => {
     if (provider === 'bitchute') {
@@ -34,6 +35,8 @@ function VideoCard({
     // dispatch(actionFetchBitchuteVideoSource(item));
     // navigate('Video', { imageUrl: item.thumbnail });
   };
+
+  const inQueue = shortQueue.indexOf(item.videoLink) !== -1;
 
   return (
     <Interactable.View
@@ -134,8 +137,8 @@ function VideoCard({
             <Icon
               name="queue"
               type="material"
-              color={item.inQueue ? colors.success : colors.gray1}
-              onPress={item.inQueue ? removeFromQueue : addToQueue}
+              color={inQueue ? colors.success : colors.gray1}
+              onPress={inQueue ? removeFromQueue : addToQueue}
             />
           </RNView>
         </RNView>

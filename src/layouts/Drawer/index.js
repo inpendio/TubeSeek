@@ -28,17 +28,18 @@ function Drawer(props) {
   const reloadBitchute = useSelector(state => state.bitchute.reloadAll);
   const currentVideo = useSelector(s => s.video.currentVideo);
   const currentlyFetching = useSelector(s => s.video.currentlyFetching);
-  const queue = useSelector(s => s.video.fetchQueue);
+  const fetchQueue = useSelector(s => s.video.fetchQueue);
+  const queue = useSelector(s => s.video.queue);
 
-  if (!!queue[0] && !queueUpdate && !currentlyFetching) {
+  if (!!fetchQueue[0] && !queueUpdate && !currentlyFetching) {
     setQueueUpdate({
-      url: queue[0],
+      url: fetchQueue[0],
       func: (data) => {
         dispatch(actionVideoUpdateQueueItem(data));
         setQueueUpdate(null);
       },
     });
-    dispatch(actionVideoSetCurrentlyFetching(queue[0].videoLink));
+    dispatch(actionVideoSetCurrentlyFetching(fetchQueue[0].videoLink));
   }
 
   const updateCurrentVideo = (data) => {
@@ -69,6 +70,15 @@ function Drawer(props) {
               navigate('BitchuteSubscriptions');
             }}
           />
+          {queue.length > 0 && (
+          <Button
+            title="Queue"
+            type="clear"
+            onPress={() => {
+              navigate('Queue');
+            }}
+          />
+          )}
         </RNView>
       </RNView>
       {!!currentVideo

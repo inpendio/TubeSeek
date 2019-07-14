@@ -1,4 +1,5 @@
 import { setBitchuteLoginData } from 'utils';
+import { DBhandler } from 'db';
 import { ACTIONS as VIDEO_ACTION } from './video';
 
 export const ACTIONS = {
@@ -66,16 +67,19 @@ export default function (store = initialStore, action) {
     case ACTIONS.BITCHUTE_ADD_FEED_SUBSCRIBED: {
       const newStore = { ...store };
       newStore.feed.subscribed = action.payload;
+      DBhandler.addItems(action.payload);
       return newStore;
     }
     case ACTIONS.BITCHUTE_ADD_FEED_ALL: {
       const newStore = { ...store };
       newStore.feed.all = action.payload;
+      DBhandler.addItems(action.payload);
       return newStore;
     }
     case ACTIONS.BITCHUTE_ADD_FEED_POPULAR: {
       const newStore = { ...store };
       newStore.feed.popular = action.payload;
+      DBhandler.addItems(action.payload);
       return newStore;
     }
     case ACTIONS.BITCHUTE_ADD_FEED_TRENDING: {
@@ -83,6 +87,11 @@ export default function (store = initialStore, action) {
       newStore.feed.trendingDay = action.payload.trendingDay;
       newStore.feed.trendingWeek = action.payload.trendingWeek;
       newStore.feed.trendingMonth = action.payload.trendingMonth;
+      DBhandler.addItems([
+        ...action.payload.trendingDay,
+        ...action.payload.trendingWeek,
+        ...action.payload.trendingMonth,
+      ]);
       return newStore;
     }
     case ACTIONS.BITCHUTE_RELOAD_ALL:
@@ -106,20 +115,29 @@ export default function (store = initialStore, action) {
       newStore.feed[name] = [...store.feed[name], ...data];
       return newStore;
     }
-    case VIDEO_ACTION.ADD_TO_QUEUE: {
-      const newStore = store;
-      const { feed, provider, ...item } = action.payload;
-      if (provider !== 'bitchute') return store;
-      newStore.feed[feed] = [...store.feed[feed]];
-      for (let i = 0; i < newStore.feed[feed].length; i++) {
-        if (newStore.feed[feed][i].videoLink === item.videoLink) {
-          newStore.feed[feed][i] = { ...newStore.feed[feed][i], inQueue: true };
-          // TODO:
-          // add to some db
-          break;
+    /* case VIDEO_ACTION.ADD_TO_QUEUE: {
+      try {
+        if (action.actionSource) return store;
+        const newStore = store;
+        const { feed, provider, ...item } = action.payload;
+        if (provider !== 'bitchute') return store;
+        newStore.feed[feed] = [...store.feed[feed]];
+        for (let i = 0; i < newStore.feed[feed].length; i++) {
+          if (newStore.feed[feed][i].videoLink === item.videoLink) {
+            newStore.feed[feed][i] = {
+              ...newStore.feed[feed][i],
+              inQueue: true,
+            };
+            // TODO:
+            // add to some db
+            break;
+          }
         }
+        return newStore;
+      } catch (error) {
+        console.log(error, action);
+        return store;
       }
-      return newStore;
     }
     case VIDEO_ACTION.REMOVE_FROM_QUEUE: {
       const newStore = store;
@@ -138,7 +156,7 @@ export default function (store = initialStore, action) {
         }
       }
       return newStore;
-    }
+    } */
     case ACTIONS.BITCHUTE_ADD_PARSED:
       return {
         ...store,

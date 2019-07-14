@@ -1,11 +1,13 @@
 import React, { memo } from 'react';
 import { View as RNView, Image } from 'react-native';
 import Video from 'react-native-video';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Loader } from 'components';
+import { actionBitchuteRemoveToQueue, actionVideoPlayNext } from 'store';
 
 function VideoBox({ videoLink, thumbnailLink, style }) {
   const orientation = useSelector(s => s.general.dimensions.orientation);
+  const dispatch = useDispatch();
   if (videoLink) {
     return (
       <Video
@@ -13,8 +15,14 @@ function VideoBox({ videoLink, thumbnailLink, style }) {
         style={[style]}
         fullscreen={orientation === 'landscape'}
         controls
-        playInBackground
-        playWhenInactive
+        onReadyForDisplay={() => {
+          dispatch(actionBitchuteRemoveToQueue({ videoLink }));
+        }}
+        onEnd={() => {
+          dispatch(actionVideoPlayNext());
+        }}
+        // playInBackground
+        // playWhenInactive
       />
     );
   }

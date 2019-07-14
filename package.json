@@ -12,6 +12,7 @@
     "@react-native-community/async-storage": "^1.5.0",
     "@react-native-firebase/analytics": "^0.0.26",
     "jsc-android": "^241213.1.0",
+    "lodash.isobject": "^3.0.2",
     "react": "16.8.3",
     "react-native": "0.59.9",
     "react-native-elements": "^1.1.0",

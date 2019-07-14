@@ -5,11 +5,9 @@ import {
   actionBitchuteReloadAll,
   actionVideoSetVideoDb,
 } from 'store';
-import db from 'db';
-import { getBitchuteLoginData } from './localStorage';
+import db, { DBhandler } from 'db';
+import { getBitchuteLoginData, getQueue } from './localStorage';
 import orientation from './orientation';
-
-console.log(db);
 
 export default async function ({ dispatch }) {
   if (
@@ -18,8 +16,10 @@ export default async function ({ dispatch }) {
   ) UIManager.setLayoutAnimationEnabledExperimental(true);
 
   orientation({ dispatch });
-  const videoDb = db.collections.get('video');
-  dispatch(actionVideoSetVideoDb(videoDb));
+  DBhandler.setDB(db);
+  DBhandler.setDispatch(dispatch);
+  const queue = await getQueue();
+  if (queue) DBhandler.retrieveQueue(queue);
   const loginData = await getBitchuteLoginData();
   if (loginData && loginData.key && loginData.password) {
     dispatch(actionAddBitchuteLoginData(loginData));

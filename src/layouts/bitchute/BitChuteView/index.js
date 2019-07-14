@@ -10,6 +10,7 @@ function BitchuteView({ navigation }) {
   const [tab, setTab] = useState(0);
   const [loadMore, setLoadMore] = useState(null);
   const feed = useSelector(state => state.bitchute.feed[FEEDS[tab]]);
+
   return (
     <>
       <FlatList

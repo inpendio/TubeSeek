@@ -50,4 +50,6 @@ export {
   actionVideoUpdateQueueItem,
   actionVideoSetCurrentlyFetching,
   actionVideoSetVideoDb,
+  actionVideoAddToCache,
+  actionVideoPlayNext,
 } from './video';

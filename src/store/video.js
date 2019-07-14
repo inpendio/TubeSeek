@@ -1,4 +1,6 @@
 import { analytics } from 'react-native-firebase';
+import { DBhandler } from 'db';
+import { setQueue } from 'utils';
 
 export const ACTIONS = {
   BITCHUTE_GET_VIDEO_SOURCE: '#_bitchute_get_video_source_#',
@@ -11,6 +13,8 @@ export const ACTIONS = {
   UPDATE_QUEUE_ITEM: '#__update_queue_item__#',
   SET_CURRENT_FETCHING: '#__set_currently_fetching__#',
   SET_VIDEO_DB: '#__set_video_db__#',
+  ADD_TO_CACHE: '#__add_to_cache__#',
+  PLAY_NEXT: '#__play_next__#',
 };
 
 const initialState = {
@@ -21,32 +25,12 @@ const initialState = {
   nextVideo: undefined,
   fetchQueue: [],
   queue: [],
+  shortQueue: [],
   currentVideo: null,
   // fetchVideo: null,
   cache: {},
   currentlyFetching: undefined,
   videoDB: null,
-};
-
-/* eslint-disable no-param-reassign */
-const saveVideoToDB = async (db, video) => {
-  console.log('video->db');
-  try {
-    const newVideo = await db.create((v) => {
-      v.text = video.text;
-      v.videoLink = video.videoLink;
-      v.source = video.source;
-      v.thumbnail = video.thumbnail;
-      v.provider = video.thumbnail;
-      v.magnetLink = video.magnetLink;
-      v.channel = JSON.stringify(video.channel);
-      v.hashtags = JSON.stringify(video.hashtags);
-      v.description = JSON.stringify(video.description);
-    });
-    console.log('video->db', newVideo);
-  } catch (error) {
-    console.log('video->db->ERROR', error);
-  }
 };
 
 export default function (store = initialState, action) {
@@ -77,10 +61,11 @@ export default function (store = initialState, action) {
     case ACTIONS.ADD_TO_QUEUE: {
       const queue = [...store.queue];
       const fetchQueue = [...store.fetchQueue];
+      const shortQueue = [...store.shortQueue];
       let doesExist = false;
       const item = action.payload;
       for (let i = 0; i < queue.length; i++) {
-        if (queue.videoLink === item.videoLink) {
+        if (queue[i].videoLink === item.videoLink) {
           doesExist = true;
           break;
         }
@@ -88,39 +73,50 @@ export default function (store = initialState, action) {
       if (!doesExist) {
         if (!store.cache[item.videoLink]) {
           queue.push(item);
+          shortQueue.push(item.videoLink);
           if (
             !store.currentVideo
             || store.currentVideo.videoLink !== action.payload.videoLink
           ) fetchQueue.push(item.videoLink);
         } else {
           queue.push(store.cache[item.videoLink]);
+          shortQueue.push(item.videoLink);
         }
       }
+      setQueue(queue);
       return {
         ...store,
         queue,
         fetchQueue,
+        shortQueue,
       };
     }
     case ACTIONS.REMOVE_FROM_QUEUE: {
       const queue = [...store.queue];
       const item = action.payload;
+      const shortQueue = [...store.shortQueue];
       for (let i = 0; i < queue.length; i++) {
         if (queue[i].videoLink === item.videoLink) {
           queue.splice(i, 1);
+          shortQueue.splice(i, 1);
           break;
         }
       }
       return {
         ...store,
         queue,
+        shortQueue,
       };
     }
-    case ACTIONS.SET_CURRENT_VIDEO:
+    case ACTIONS.SET_CURRENT_VIDEO: {
+      const { cache } = store;
       return {
         ...store,
-        currentVideo: action.payload,
+        currentVideo: cache[action.payload.videoLink]
+          ? cache[action.payload.videoLink]
+          : action.payload,
       };
+    }
     case ACTIONS.UPDATE_CURRENT_VIDEO: {
       const cache = { ...store.cache };
       const newVideo = {
@@ -128,7 +124,7 @@ export default function (store = initialState, action) {
         ...action.payload,
       };
       cache[store.currentVideo.videoLink] = newVideo;
-      saveVideoToDB(store.videoDB, newVideo);
+      DBhandler.addToDB(newVideo);
       return {
         ...store,
         currentVideo: newVideo,
@@ -146,7 +142,7 @@ export default function (store = initialState, action) {
           const newItem = { ...queue[i], ...item };
           cache[queue[i].videoLink] = newItem;
           queue[i] = newItem;
-          saveVideoToDB(store.videoDB, newItem);
+          DBhandler.addToDB(newItem);
           fetchQueue.splice(fetchQueue.indexOf(item.videoLink), 1);
           break;
         }
@@ -160,6 +156,48 @@ export default function (store = initialState, action) {
     }
     case ACTIONS.SET_VIDEO_DB:
       return { ...store, videoDB: action.payload };
+    case ACTIONS.ADD_TO_CACHE: {
+      const cache = { ...store.cache };
+      const {
+        videoLink,
+        text,
+        channel,
+        thumbnail,
+        provider,
+        magnetLink,
+        source,
+        hashtags,
+        description,
+        feed,
+      } = action.payload;
+      if (videoLink) {
+        cache[videoLink] = {
+          videoLink,
+          text,
+          channel,
+          thumbnail,
+          provider,
+          magnetLink,
+          source,
+          hashtags,
+          description,
+          feed,
+        };
+      }
+      return {
+        ...store,
+        cache,
+      };
+    }
+    case ACTIONS.PLAY_NEXT: {
+      const queue = [...store.queue];
+      const currentVideo = queue.shift();
+      return {
+        ...store,
+        queue,
+        currentVideo,
+      };
+    }
     default:
       return store;
   }
@@ -177,9 +215,10 @@ export const actionCleanVideo = payload => ({
   type: ACTIONS.CLEAN,
   payload,
 });
-export const actionBitchuteAddToQueue = payload => ({
+export const actionBitchuteAddToQueue = (payload, actionSource) => ({
   type: ACTIONS.ADD_TO_QUEUE,
   payload,
+  actionSource,
 });
 export const actionBitchuteRemoveToQueue = payload => ({
   type: ACTIONS.REMOVE_FROM_QUEUE,
@@ -205,4 +244,11 @@ export const actionVideoSetCurrentlyFetching = payload => ({
 export const actionVideoSetVideoDb = payload => ({
   type: ACTIONS.SET_VIDEO_DB,
   payload,
+});
+export const actionVideoAddToCache = payload => ({
+  type: ACTIONS.ADD_TO_CACHE,
+  payload,
+});
+export const actionVideoPlayNext = () => ({
+  type: ACTIONS.PLAY_NEXT,
 });

@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 const BITCHUTE_SESSION_COOKIE = 'bitchute_session_cookie';
 const BITCHUTE_LOGIN_DATA = 'bitchute_login_data';
+const QUEUE = 'queue';
 
 export const getBitchuteSessionCookie = async () => {
   try {
@@ -52,5 +53,32 @@ export const removeBitchuteLoginData = async () => {
     await AsyncStorage.removeItem(BITCHUTE_LOGIN_DATA);
   } catch (error) {
     console.log('ERROR@removeBitchuteLoginData', error);
+  }
+};
+
+export const getQueue = async () => {
+  try {
+    const res = await AsyncStorage.getItem(QUEUE);
+    return JSON.parse(res);
+  } catch (error) {
+    console.log('ERROR@getQueue', error);
+    return null;
+  }
+};
+
+export const setQueue = async (data) => {
+  try {
+    const newData = data.map(d => d.videoLink);
+    await AsyncStorage.setItem(QUEUE, JSON.stringify(newData));
+  } catch (error) {
+    console.log('ERROR@setQueue', error);
+  }
+};
+
+export const removeQueue = async () => {
+  try {
+    await AsyncStorage.removeItem(QUEUE);
+  } catch (error) {
+    console.log('ERROR@removeQueue', error);
   }
 };
