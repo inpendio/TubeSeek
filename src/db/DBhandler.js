@@ -20,9 +20,9 @@ class DBHandler {
     for (let i = 0; i < q.length; i++) {
       try {
         const item = await this.getItemFromDBByVideoLink(q[i]);
-        if (item[0].videoLink) {
-          this.dispatch(actionVideoAddToCache(item[0]));
-          this.dispatch(actionBitchuteAddToQueue(item[0], '_from_storage'));
+        if (item && item.videoLink) {
+          this.dispatch(actionVideoAddToCache(item));
+          this.dispatch(actionBitchuteAddToQueue(item, '_from_storage'));
         }
       } catch (error) {
         console.log(error, q[i]);
@@ -40,16 +40,17 @@ class DBHandler {
       const item = await this.videoCollection
         .query(Q.where('videoLink', videoLink))
         .fetch();
-      return item;
+      return item[0];
     } catch (error) {
       console.log(error);
+      return null;
     }
   };
 
   queryFromCollection = async (videoLink) => {
     try {
       const itemToCache = await this.getItemFromDBByVideoLink(videoLink);
-      if (itemToCache[0] && itemToCache[0].videoLink) this.dispatch(actionVideoAddToCache(itemToCache[0]));
+      if (itemToCache && itemToCache.videoLink) this.dispatch(actionVideoAddToCache(itemToCache));
     } catch (error) {
       console.log(error);
     }
@@ -79,6 +80,7 @@ class DBHandler {
           v.thumbnail = item.thumbnail;
           v.provider = item.provider;
           v.magnetLink = item.magnetLink;
+          v.duration = item.duration;
           v.channel = JSON.stringify(item.channel);
           v.hashtags = JSON.stringify(item.hashtags);
           v.description = JSON.stringify(item.description);

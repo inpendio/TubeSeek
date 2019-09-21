@@ -10,7 +10,7 @@ import cl.json.RNSharePackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
-import com.inprogress.reactnativeyoutube.ReactNativeYouTube;
+// import com.inprogress.reactnativeyoutube.ReactNativeYouTube;
 import com.reactnativecommunity.webview.RNCWebViewPackage;
 import com.brentvatne.react.ReactVideoPackage;
 import com.ijzerenhein.magicmove.ReactMagicMovePackage;
@@ -44,7 +44,7 @@ public class MainApplication extends Application implements ReactApplication {
             new AsyncStoragePackage(),
             new RNGestureHandlerPackage(),
             new VectorIconsPackage(),
-            new ReactNativeYouTube(),
+            // new ReactNativeYouTube(),
             new RNCWebViewPackage(),
             new ReactVideoPackage(),
             new ReactMagicMovePackage(),

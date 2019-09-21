@@ -18,6 +18,7 @@ function FeedWebView() {
 
   const onMessage = (event) => {
     let data;
+    console.log(event.nativeEvent);
     try {
       data = JSON.parse(event.nativeEvent.data);
       if (data.parsedData && data.list.subscribed.parsed.length > 0) {

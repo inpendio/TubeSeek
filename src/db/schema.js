@@ -1,7 +1,7 @@
 import { appSchema, tableSchema } from '@nozbe/watermelondb';
 
 export default appSchema({
-  version: 1,
+  version: 2,
   tables: [
     tableSchema({
       name: 'video',
@@ -15,6 +15,7 @@ export default appSchema({
         { name: 'source', type: 'string' },
         { name: 'hashtags', type: 'string' },
         { name: 'description', type: 'string' },
+        { name: 'duration', type: 'string' },
       ],
     }),
   ],

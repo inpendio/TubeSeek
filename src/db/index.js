@@ -9,6 +9,7 @@ export { default as DBhandler } from './DBhandler';
 const isObject = require('lodash.isobject');
 
 const sanitizer = (s) => {
+  if (!s) return null;
   try {
     if (isObject(s) || Array.isArray(s)) return s;
     const data = JSON.parse(s);
@@ -31,6 +32,8 @@ class Video extends Model {
   @text('thumbnail') thumbnail;
 
   @text('provider') provider;
+
+  @text('duration') duration;
 
   @text('magnetLink') magnetLink;
 

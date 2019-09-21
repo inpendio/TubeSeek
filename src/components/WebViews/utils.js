@@ -73,7 +73,7 @@ const JS_BITCHUTE_GET_OTHER_META = `
 function getOtherMeta(){
   var out={};
   var magnetLink = document.querySelector("a[data-original-title='Magnet Link']");
-  out.magnetLink = magnetLink.href;
+  if(magnetLink && magnetLink.href)out.magnetLink = magnetLink.href;
 
   return out;
 }

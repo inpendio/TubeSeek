@@ -4,8 +4,9 @@ import {
 import bitchute from './bitchute';
 import general from './general';
 import video from './video';
+import MusicMiddlewere from './BackgroundControlsMiddlewere';
 
-const middleware = [];
+const middleware = [MusicMiddlewere];
 
 const rootReducer = combineReducers({
   bitchute,
@@ -37,6 +38,7 @@ export {
   actionToggleLoading,
   addOrientationData,
   addNavigation,
+  actionSetBackgroundStatus,
 } from './general';
 
 export {
@@ -52,4 +54,7 @@ export {
   actionVideoSetVideoDb,
   actionVideoAddToCache,
   actionVideoPlayNext,
+  actionToggleCurrentVideoPause,
+  actionPlayVideo,
+  actionPauseVideo,
 } from './video';

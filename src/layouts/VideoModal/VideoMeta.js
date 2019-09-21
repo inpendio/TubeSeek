@@ -37,7 +37,7 @@ function VideoMeta({ style }) {
         style,
       ]}
     >
-      <TouchableWithoutFeedback>
+      <TouchableWithoutFeedback style={{ zIndex: 99999 }}>
         <RNView>
           <RNView
             key="video_meta"

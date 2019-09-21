@@ -7,6 +7,11 @@ export const styles = StyleSheet.create({
     color: c.black,
     fontFamily: 'Roboto',
   },
+  base_dark: {
+    fontSize: 13,
+    color: c.white,
+    fontFamily: 'Roboto',
+  },
 });
 export const sizes = StyleSheet.create({
   h1: {
@@ -35,6 +40,9 @@ export const sizes = StyleSheet.create({
 export const colors = StyleSheet.create({
   primary: {
     color: c.primary,
+  },
+  primary_dark: {
+    color: c.secondary,
   },
   secondary: {
     color: c.secondary,
