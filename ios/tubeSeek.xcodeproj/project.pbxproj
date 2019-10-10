@@ -68,6 +68,10 @@
 		2ACBC81FC49A4515973DD37D /* libRNFirebase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5880B2A8D0324C6D83A8C95A /* libRNFirebase.a */; };
 		D8AD23C66C5A48519EA5DC08 /* libRNFBAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5AF4243514941BFA5C53820 /* libRNFBAnalytics.a */; };
 		5763EAE16FD04B358B958E54 /* libWatermelonDB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B4558F088F48481E94734D0E /* libWatermelonDB.a */; };
+		5CC272C5EB2F44B0B0C02EBA /* libMusicControl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A62E2DCE2F1D4305AACEE9A2 /* libMusicControl.a */; };
+		1871809C077E4CBFA86F1B1A /* libMusicControl-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D8AADFCFC5042E283233597 /* libMusicControl-tvOS.a */; };
+		E4C6A8691F4340269C784D43 /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D7FB6887B707466C985C0C4A /* libRNDeviceInfo.a */; };
+		BC38A5A4E92A473F83E60426 /* libRNDeviceInfo-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 08E5525A1A844861AB0DE44D /* libRNDeviceInfo-tvOS.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -416,6 +420,12 @@
 		A5AF4243514941BFA5C53820 /* libRNFBAnalytics.a */ = {isa = PBXFileReference; name = "libRNFBAnalytics.a"; path = "libRNFBAnalytics.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		4ABABC44F52D4F3586A48B7F /* WatermelonDB.xcodeproj */ = {isa = PBXFileReference; name = "WatermelonDB.xcodeproj"; path = "../node_modules/@nozbe/watermelondb/native/ios/WatermelonDB.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		B4558F088F48481E94734D0E /* libWatermelonDB.a */ = {isa = PBXFileReference; name = "libWatermelonDB.a"; path = "libWatermelonDB.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		C9EFACDF94FD45C793F01D5D /* MusicControl.xcodeproj */ = {isa = PBXFileReference; name = "MusicControl.xcodeproj"; path = "../node_modules/react-native-music-control/ios/MusicControl.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		A62E2DCE2F1D4305AACEE9A2 /* libMusicControl.a */ = {isa = PBXFileReference; name = "libMusicControl.a"; path = "libMusicControl.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		6D8AADFCFC5042E283233597 /* libMusicControl-tvOS.a */ = {isa = PBXFileReference; name = "libMusicControl-tvOS.a"; path = "libMusicControl-tvOS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		1FE9C7182DDD40AAA975C38E /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; name = "RNDeviceInfo.xcodeproj"; path = "../node_modules/react-native-device-info/ios/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		D7FB6887B707466C985C0C4A /* libRNDeviceInfo.a */ = {isa = PBXFileReference; name = "libRNDeviceInfo.a"; path = "libRNDeviceInfo.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		08E5525A1A844861AB0DE44D /* libRNDeviceInfo-tvOS.a */ = {isa = PBXFileReference; name = "libRNDeviceInfo-tvOS.a"; path = "libRNDeviceInfo-tvOS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -456,6 +466,8 @@
 				2ACBC81FC49A4515973DD37D /* libRNFirebase.a in Frameworks */,
 				D8AD23C66C5A48519EA5DC08 /* libRNFBAnalytics.a in Frameworks */,
 				5763EAE16FD04B358B958E54 /* libWatermelonDB.a in Frameworks */,
+				5CC272C5EB2F44B0B0C02EBA /* libMusicControl.a in Frameworks */,
+				E4C6A8691F4340269C784D43 /* libRNDeviceInfo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -474,6 +486,8 @@
 				2D02E4C81E0B4AEC006451C7 /* libRCTWebSocket-tvOS.a in Frameworks */,
 				50E9C12B89DF416BB1393667 /* libRNVectorIcons-tvOS.a in Frameworks */,
 				80F0423B770C44DC8482D378 /* libRNGestureHandler-tvOS.a in Frameworks */,
+				1871809C077E4CBFA86F1B1A /* libMusicControl-tvOS.a in Frameworks */,
+				BC38A5A4E92A473F83E60426 /* libRNDeviceInfo-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -659,6 +673,8 @@
 				B08706B7305B4A689E947AF3 /* RNFirebase.xcodeproj */,
 				DD7BF2D1EA3B4CB8B8AB94BD /* RNFBAnalytics.xcodeproj */,
 				4ABABC44F52D4F3586A48B7F /* WatermelonDB.xcodeproj */,
+				C9EFACDF94FD45C793F01D5D /* MusicControl.xcodeproj */,
+				1FE9C7182DDD40AAA975C38E /* RNDeviceInfo.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1339,6 +1355,10 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1354,6 +1374,8 @@
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 					"$(SRCROOT)/../node_modules/@react-native-firebase/analytics/ios/RNFBAnalytics",
 					"$(SRCROOT)/../node_modules/@nozbe/watermelondb/native/ios/WatermelonDB/SupportingFiles/**",
+					"$(SRCROOT)/../node_modules/react-native-music-control/ios",
+					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 				);
 			};
 			name = Debug;
@@ -1389,6 +1411,10 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1404,6 +1430,8 @@
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 					"$(SRCROOT)/../node_modules/@react-native-firebase/analytics/ios/RNFBAnalytics",
 					"$(SRCROOT)/../node_modules/@nozbe/watermelondb/native/ios/WatermelonDB/SupportingFiles/**",
+					"$(SRCROOT)/../node_modules/react-native-music-control/ios",
+					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 				);
 			};
 			name = Release;
@@ -1438,6 +1466,8 @@
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 					"$(SRCROOT)/../node_modules/@react-native-firebase/analytics/ios/RNFBAnalytics",
 					"$(SRCROOT)/../node_modules/@nozbe/watermelondb/native/ios/WatermelonDB/SupportingFiles/**",
+					"$(SRCROOT)/../node_modules/react-native-music-control/ios",
+					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 				);
 			};
 			name = Debug;
@@ -1471,6 +1501,8 @@
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 					"$(SRCROOT)/../node_modules/@react-native-firebase/analytics/ios/RNFBAnalytics",
 					"$(SRCROOT)/../node_modules/@nozbe/watermelondb/native/ios/WatermelonDB/SupportingFiles/**",
+					"$(SRCROOT)/../node_modules/react-native-music-control/ios",
+					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 				);
 			};
 			name = Release;
@@ -1514,6 +1546,10 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1529,6 +1565,8 @@
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 					"$(SRCROOT)/../node_modules/@react-native-firebase/analytics/ios/RNFBAnalytics",
 					"$(SRCROOT)/../node_modules/@nozbe/watermelondb/native/ios/WatermelonDB/SupportingFiles/**",
+					"$(SRCROOT)/../node_modules/react-native-music-control/ios",
+					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 				);
 			};
 			name = Debug;
@@ -1572,6 +1610,10 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1587,6 +1629,8 @@
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 					"$(SRCROOT)/../node_modules/@react-native-firebase/analytics/ios/RNFBAnalytics",
 					"$(SRCROOT)/../node_modules/@nozbe/watermelondb/native/ios/WatermelonDB/SupportingFiles/**",
+					"$(SRCROOT)/../node_modules/react-native-music-control/ios",
+					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 				);
 			};
 			name = Release;
@@ -1629,6 +1673,10 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1644,6 +1692,8 @@
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 					"$(SRCROOT)/../node_modules/@react-native-firebase/analytics/ios/RNFBAnalytics",
 					"$(SRCROOT)/../node_modules/@nozbe/watermelondb/native/ios/WatermelonDB/SupportingFiles/**",
+					"$(SRCROOT)/../node_modules/react-native-music-control/ios",
+					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 				);
 			};
 			name = Debug;
@@ -1686,6 +1736,10 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1701,6 +1755,8 @@
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 					"$(SRCROOT)/../node_modules/@react-native-firebase/analytics/ios/RNFBAnalytics",
 					"$(SRCROOT)/../node_modules/@nozbe/watermelondb/native/ios/WatermelonDB/SupportingFiles/**",
+					"$(SRCROOT)/../node_modules/react-native-music-control/ios",
+					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 				);
 			};
 			name = Release;

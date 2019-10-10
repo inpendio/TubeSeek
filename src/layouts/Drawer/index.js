@@ -1,4 +1,6 @@
-import React, { memo, useState, useEffect } from 'react';
+import React, {
+  memo, useState, useEffect, useRef,
+} from 'react';
 import { View as RNView, TouchableOpacity, Image } from 'react-native';
 import { View } from 'react-native-magic-move';
 import { Text, /* Button,  */ Icon } from 'react-native-elements';
@@ -14,6 +16,8 @@ import {
   actionVideoUpdateCurrentVideo,
   actionVideoUpdateQueueItem,
   actionVideoSetCurrentlyFetching,
+  actionBitchuteReloadAll,
+  actionSetVideoError,
 } from 'store';
 
 import styles from './styles';
@@ -26,10 +30,25 @@ function Drawer(props) {
   const [queueUpdate, setQueueUpdate] = useState(null);
   const bitchuteLogin = useSelector(state => state.bitchute.loggedIn);
   const reloadBitchute = useSelector(state => state.bitchute.reloadAll);
+  const reloadBitchuteTimestamp = useSelector(
+    state => state.bitchute.reloadAllTimeStamp,
+  );
   const currentVideo = useSelector(s => s.video.currentVideo);
   const currentlyFetching = useSelector(s => s.video.currentlyFetching);
   const fetchQueue = useSelector(s => s.video.fetchQueue);
   const queue = useSelector(s => s.video.queue);
+  const reloadTimeout = useRef(null);
+
+  useEffect(() => {
+    if (reloadBitchuteTimestamp === 0) {
+      clearTimeout(reloadTimeout.current);
+      reloadTimeout.current = null;
+    } else {
+      reloadTimeout.current = setTimeout(() => {
+        dispatch(actionBitchuteReloadAll());
+      }, 30000);
+    }
+  }, [reloadBitchuteTimestamp]);
 
   if (!!fetchQueue[0] && !queueUpdate && !currentlyFetching) {
     setQueueUpdate({
@@ -44,6 +63,10 @@ function Drawer(props) {
 
   const updateCurrentVideo = (data) => {
     dispatch(actionVideoUpdateCurrentVideo(data));
+  };
+
+  const videoFetchFail = ({ meta, error }) => {
+    dispatch(actionSetVideoError(error));
   };
 
   /* console.log(1, currentVideo);
@@ -71,13 +94,13 @@ function Drawer(props) {
             }}
           />
           {queue.length > 0 && (
-          <Button
-            title="Queue"
-            type="clear"
-            onPress={() => {
-              navigate('Queue');
-            }}
-          />
+            <Button
+              title="Queue"
+              type="clear"
+              onPress={() => {
+                navigate('Queue');
+              }}
+            />
           )}
         </RNView>
       </RNView>
@@ -89,6 +112,7 @@ function Drawer(props) {
             key={currentVideo.videoLink}
             url={currentVideo.videoLink}
             onSuccess={updateCurrentVideo}
+            onFail={videoFetchFail}
           />
       )}
       {!!queueUpdate && (
@@ -96,9 +120,10 @@ function Drawer(props) {
           key={queueUpdate.url}
           url={queueUpdate.url}
           onSuccess={queueUpdate.func}
+          onFail={() => {}}
         />
       )}
-      {reloadBitchute && <FeedWebView />}
+      {reloadBitchute && <FeedWebView key={reloadBitchuteTimestamp} />}
       <RNView>
         <TouchableOpacity
           style={styles.tubeButton}

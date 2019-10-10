@@ -1,8 +1,14 @@
-import { Dimensions } from 'react-native';
+import { Dimensions, StatusBar } from 'react-native';
+import DeviceInfo from 'react-native-device-info';
 import { addOrientationData } from 'store';
 
+export const ORIENTATION = {
+  PORTRAIT: 'portrait',
+  LANDSCAPE: 'landscape',
+};
+
 export default function orientation({ dispatch }) {
-  const getOrientation = (w, h) => (w < h ? 'portrait' : 'landscape');
+  const getOrientation = (w, h) => (w < h ? ORIENTATION.PORTRAIT : ORIENTATION.LANDSCAPE);
   const onChange = (p) => {
     const all = Dimensions.get('window');
     const { width, height } = all;
@@ -11,6 +17,7 @@ export default function orientation({ dispatch }) {
         orientation: getOrientation(width, height),
         width,
         height,
+        statusBar: DeviceInfo.hasNotch() ? StatusBar.currentHeight : 0,
       }),
     );
   };

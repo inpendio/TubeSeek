@@ -8,8 +8,12 @@ import {
 import db, { DBhandler } from 'db';
 import { getBitchuteLoginData, getQueue } from './localStorage';
 import orientation from './orientation';
+import {
+  MusicBackgroundHandler,
+  AppBackgroundHandler,
+} from './BackgroundHandler';
 
-export default async function ({ dispatch }) {
+export default async function ({ dispatch, getState }) {
   if (
     Platform.OS === 'android'
     && UIManager.setLayoutAnimationEnabledExperimental
@@ -26,4 +30,7 @@ export default async function ({ dispatch }) {
   }
   dispatch(actionToggleLoading());
   dispatch(actionBitchuteReloadAll());
+  MusicBackgroundHandler.setDispatcher(dispatch);
+  MusicBackgroundHandler.reset();
+  AppBackgroundHandler.setDispatcher(dispatch);
 }
