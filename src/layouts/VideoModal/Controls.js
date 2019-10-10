@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
-import { Icon } from 'react-native-elements';
+import { Icon, Text } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionToggleCurrentVideoPause } from 'store';
 
@@ -19,18 +19,17 @@ const styles = StyleSheet.create({
   },
 });
 
-function Controls({ style, closeControls, isFull }) {
+function Controls({
+  style, closeControls, isFull, error,
+}) {
   const dispatch = useDispatch();
   const paused = useSelector(s => s.video.currentVideo.paused);
   return (
-    <TouchableOpacity
-      onPress={() => {
-        console.log('pressed');
-      }}
-      style={{ zIndex: 999999 }}
-    >
-      <View style={[styles.wrapper, style]}>
-        <View style={[styles.playWrapper]}>
+    <View style={[styles.wrapper, style]}>
+      <View style={[styles.playWrapper]}>
+        {error ? (
+          <Text>{error}</Text>
+        ) : (
           <Icon
             type="material"
             name={paused ? 'play-circle-outline' : 'pause'}
@@ -43,11 +42,11 @@ function Controls({ style, closeControls, isFull }) {
               dispatch(actionToggleCurrentVideoPause());
             }}
           />
-        </View>
-        <View />
-        <View />
+        )}
       </View>
-    </TouchableOpacity>
+      <View />
+      <View />
+    </View>
   );
 }
 

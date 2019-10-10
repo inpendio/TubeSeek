@@ -12,6 +12,16 @@ export const ERRORS = {
   2: { login: false, msg: 'uknown error' },
 };
 
+export const POST_MESSAGE = `
+    postToRN = function(message){
+      if(window.ReactNativeWebView && window.ReactNativeWebView.postMessage){
+        window.ReactNativeWebView.postMessage(JSON.stringify(message));
+      }else{
+        console.log(message);
+      }
+    }
+`;
+
 const JS_BITCHUTE_GET_DESCRIPTION_TEXT = `
 function getDescriptionText(){
   var psInVideoDesc= document.getElementById("video-description").getElementsByClassName("full")[0].getElementsByTagName("p");
@@ -79,6 +89,14 @@ function getOtherMeta(){
 }
 `;
 
+const CHECK_IF_RUMBLE = `
+function isRumble(){
+  var _isRumble = document.getElementsByClassName('rumble')[0]
+  if(!!_isRumble)return true;
+  return false;
+}
+`;
+
 const JS_BITCHUTE_GET_VIDEO_META = `
 ${JS_BITCHUTE_GET_OTHER_META}
 ${JS_BITCHUTE_GET_DESCRIPTION_TEXT}
@@ -95,14 +113,16 @@ function getVideoMeta(){
 `;
 
 const JS_CHECK_FOR_USER_PASS_ERROR = `
+${POST_MESSAGE}
 function checkForLoginPassError(){
   var errorClasses = document.getElementById("login_error").classList.value;
-  if(errorClasses.indexOf('hidden')===-1)window.ReactNativeWebView.postMessage(JSON.stringify({error:1}));
+  if(errorClasses.indexOf('hidden')===-1)postToRN({error:1});
 }
 setTimeout(checkForLoginPassError,2000);
 `;
 
 const JS_LOGIN_PROGRAMMATICALLY = `
+${POST_MESSAGE}
 function loginProgrammatically(key, password){
   var mailField = document.getElementById('id_username');
   var passwordfiled = document.getElementById('id_password');
@@ -110,7 +130,7 @@ function loginProgrammatically(key, password){
   if(mailField)mailField.value=key;
   if(passwordfiled)passwordfiled.value=password;
   if(mailField && passwordfiled && submitButton)submitButton.click();
-  else{window.ReactNativeWebView.postMessage(JSON.stringify({error:2}));}
+  else{postToRN({error:2});}
   ${JS_CHECK_FOR_USER_PASS_ERROR}
 }
 `;
@@ -129,6 +149,7 @@ var isLoggedIn = false;
 `;
 
 const JS_BITCHUTE_FEED_PARSE = `
+${POST_MESSAGE}
 function mf_parse_feed() {
   var mf_lists = {
     subscribed:{
@@ -205,14 +226,19 @@ function mf_parse_feed() {
       }
     };
   });
-  window.ReactNativeWebView.postMessage(JSON.stringify({parsedData:true, list:mf_lists, login:isLoggedIn,meta:mf_meta}));
+  postToRN({parsedData:true, list:mf_lists, login:isLoggedIn,meta:mf_meta});
 }
 `;
 
 export const JS_GET_BITCHUTE_VIDEO_SOURCE = `
+${POST_MESSAGE}
 ${JS_BITCHUTE_GET_VIDEO_META}
+${CHECK_IF_RUMBLE}
 var mf_src = document.getElementsByTagName("source")[0];
-window.ReactNativeWebView.postMessage(JSON.stringify({source:mf_src.src, meta:getVideoMeta()}));
+if(mf_src)postToRN({source:mf_src.src, meta:getVideoMeta()});
+else{
+  if(isRumble())postToRN({source:null, meta:getVideoMeta(), error:'rumble_video'})
+}
 `;
 
 export const JS_FEED = `
@@ -221,41 +247,16 @@ export const JS_FEED = `
   checkIfLoggedIn();
   setTimeout(mf_parse_feed,0);
 `;
-// else window.ReactNativeWebView.postMessage(JSON.stringify({parsedData:false, login:isLoggedIn}));
-// document.getElementById("canonical").href.replace("https://www.bitchute.com/channel","").replace(/\//gmi,"")
-
-/*   var cann = document.getElementById("canonical").href.replace("https://www.bitchute.com/channel","").replace(/\//gmi,"");
-  var tt = document.querySelector('input[name="csrfmiddlewaretoken"]').attributes.value.value;
-  window.ReactNativeWebView.postMessage(JSON.stringify({start:true, data:{cann,tt}}));
-  $.post('/channel/'+cann+'/sub/',{'csrfmiddlewaretoken':tt},
-  function(result){
-    if(result.success){
-      window.ReactNativeWebView.postMessage(JSON.stringify({result}));
-    }
-  }
-  ); */
-
-/*
- var cann = document.getElementById("canonical").href.replace("https://www.bitchute.com/channel","").replace(/\//gmi,"");
-  var tt = document.querySelector('input[name="csrfmiddlewaretoken"]').attributes.value.value;
-  window.ReactNativeWebView.postMessage(JSON.stringify({start:true, data:{cann,tt}}));
-  $.post('/channel/'+cann+'/sub/',{'csrfmiddlewaretoken':tt},
-  function(result){
-    if(result.success){
-      window.ReactNativeWebView.postMessage(JSON.stringify({result}));
-    }
-  }
-  );
-   */
 
 export const JS_BITCHUTE_SUB = `
+${POST_MESSAGE}
 function mf_toggleSub(){
   var cann = document.getElementById("canonical").href.replace("https://www.bitchute.com/channel/","").replace("/","");
   var tt = document.querySelector('input[name="csrfmiddlewaretoken"]').attributes.value.value;
  $.post('/channel/'+cann+'/sub/',{'csrfmiddlewaretoken':tt},
   function(result){
     if(result.success){
-      window.ReactNativeWebView.postMessage(JSON.stringify(result));
+      postToRN(result);
     }
   }
   );
@@ -267,12 +268,13 @@ setTimeout(mf_toggleSub,0);
 `;
 
 export const JS_BITCHUTE_SUB2 = `
+${POST_MESSAGE}
 function toggleSubscription2(id,csrf){
-  window.ReactNativeWebView.postMessage(JSON.stringify({start:false, jquery:!!$}));
+  postToRN({start:false, jquery:!!$});
     $.post('/channel/'+id+'/sub/',{'csrfmiddlewaretoken':csrf},
     function(result){
       if(result.success){
-        window.ReactNativeWebView.postMessage(JSON.stringify({result}));
+        postToRN({result});
       }
     }
     );
@@ -280,13 +282,14 @@ function toggleSubscription2(id,csrf){
   function sub(){
     var subButton = document.querySelector("[id^='sub-btn-']");
     subButton.attributes.onclick.value = subButton.attributes.onclick.value.replace("toggleSubscription","toggleSubscription2");
-    window.ReactNativeWebView.postMessage(JSON.stringify({start:true, jquery:!!$}));
+    postToRN({start:true, jquery:!!$});
     subButton.click();
   }
   sub();
 `;
 
 export const JS_FOR_LOGIN = `
+${POST_MESSAGE}
 function getCookie(){
     var sessionCookie;
     document.cookie.split(';').forEach(c=>{
@@ -300,33 +303,36 @@ function getCookie(){
     return null;
 }
 if(location.href === "${BITCHUTE_URI}" || location.href === "${BITCHUTE_URI}" + "/"){
-    window.ReactNativeWebView.postMessage(JSON.stringify({ifis:true})); 
+    postToRN({ifis:true}); 
  var sessionId = getCookie();
- if(sessionId)window.ReactNativeWebView.postMessage(JSON.stringify({hasCookie:true, cookie:sessionId}));
- else window.ReactNativeWebView.postMessage(JSON.stringify({hasCookie:false}));
+ if(sessionId)postToRN({hasCookie:true, cookie:sessionId});
+ else postToRN({hasCookie:false});
 }
 `;
 
 export const JS_BITCHUTE_LOGIN = ({ password, key }) => `
+${POST_MESSAGE}
 ${JS_LOGIN_PROGRAMMATICALLY}
 ${JS_CHECK_IF_LOGIN}
 if(!checkIfLoggedIn())loginProgrammatically("${key}", "${password}");
-else{window.ReactNativeWebView.postMessage(JSON.stringify({login:true}));}
+else{postToRN({login:true});}
 `;
 
 export const JS_BITCHUTE_LOGOUT = `
+${POST_MESSAGE}
 ${JS_CHECK_IF_LOGIN}
 function checkLogoutSuccess(){
   if(checkIfLoggedIn()){
-    window.ReactNativeWebView.postMessage(JSON.stringify({login:true}));
+    postToRN({login:true});
   }else{
-    window.ReactNativeWebView.postMessage(JSON.stringify({login:false}));
+    postToRN({login:false});
   }
 }
 setTimeout(checkLogoutSuccess, 1500);
 `;
 
 export const JS_BITCHUTE_SEARCH_PARSE = `
+${POST_MESSAGE}
   var out={results:[]};
   var results = document.getElementsByClassName("oss-one-result");
   
@@ -342,7 +348,7 @@ export const JS_BITCHUTE_SEARCH_PARSE = `
     out.results.push(res);
   }
   out.totalPages = document.getElementsByClassName("oss-paging")[0].getElementsByTagName("a").length;
-  window.ReactNativeWebView.postMessage(JSON.stringify({data:out, parsed:true}));
+  postToRN({data:out, parsed:true});
 `;
 
 const JS_CHANNEL_VIDEO_CARD_TO_JSON = `
@@ -373,6 +379,7 @@ function getChannelVideos(offset=0, list){
 `;
 
 export const JS_BITCHUTE_CHANNEL_PAGE_DATA = `
+${POST_MESSAGE}
 ${JS_CHANNEL_PARSE_CHANNEL_LIST}
 var data={};
 function getChannelList(){
@@ -391,10 +398,11 @@ function getChannelList(){
 }
 data.channelInfo = getChannelList();
 data.videoList= getChannelVideos();
-window.ReactNativeWebView.postMessage(JSON.stringify({data, parsed:true}));
+postToRN({data, parsed:true});
 `;
 
 const JS_BITCHUTE_CHANNEL_EXTEND = `
+${POST_MESSAGE}
 ${JS_CHANNEL_PARSE_CHANNEL_LIST}
 function channelExtend2(extend, cc) {
   var more = $("#channel-tabs .active .show-more");
@@ -421,7 +429,7 @@ function channelExtend2(extend, cc) {
           var newElem = document.createElement("div");
           newElem.innerHTML = result.html.trim();
           var videoList= getChannelVideos(0,newElem.children);
-          window.ReactNativeWebView.postMessage(JSON.stringify({data:videoList, parsed:true}));
+          postToRN({data:videoList, parsed:true});
           /* spaAttachEvents();
           playlistAttachEvents();
           $('[data-toggle="tooltip"]').tooltip({
@@ -447,6 +455,7 @@ channelExtend2(25,${offset});
 `;
 
 export const JS_BITCHUTE_SUBSCRIPTION_LIST = `
+${POST_MESSAGE}
 function getSubList(){
   var out=[];
   var subList= document.getElementById("page-detail").children
@@ -462,10 +471,11 @@ function getSubList(){
   }
   return out;
 }
-window.ReactNativeWebView.postMessage(JSON.stringify({data:getSubList(), parsed:true}));
+postToRN({data:getSubList(), parsed:true});
 `;
 
 export const JS_BITCHUTE_FEED_LOAD_MORE = ({ offset, last, name }) => `
+${POST_MESSAGE}
 function mfListingExtend(extend){
   var mf_lists = {
     subscribed:{
@@ -549,7 +559,7 @@ function mfListingExtend(extend){
               rr.push(out);
             }
           };
-          window.ReactNativeWebView.postMessage(JSON.stringify({data:rr, parsed:true}));
+          postToRN({data:rr, parsed:true});
       }
     }
     );

@@ -37,54 +37,52 @@ function VideoMeta({ style }) {
         style,
       ]}
     >
-      <TouchableWithoutFeedback style={{ zIndex: 99999 }}>
-        <RNView>
-          <RNView
-            key="video_meta"
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              width: '100%',
-            }}
-          >
-            <HashTags hashtags={videoMeta.hashtags} />
-            <ViewCount views={videoMeta.views} />
-          </RNView>
-          <Description
-            title={videoMeta.text}
-            description={videoMeta.description}
-          />
-          {videoMeta.channel && !!navigation && (
-            <BitchuteChannelInfoCard
-              data={videoMeta.channel}
-              navigation={navigation}
-            />
-          )}
-          {nextVideo && (
-            <RNView>
-              <RNView
-                style={{
-                  flexDirection: 'row',
-                  backgroundColor: colors.primary,
-                  paddingHorizontal: 10,
-                  paddingVertical: 15,
-                  marginTop: 15,
-                }}
-              >
-                <Text h2 style={{ color: colors.white }}>
-                  Next
-                </Text>
-              </RNView>
-              <RNView>
-                <VideoCard item={nextVideo} navigation={navigation} />
-              </RNView>
-            </RNView>
-          )}
-          {!!navigation && (
-            <BitchuteNexVideos navigation={navigation} current={videoMeta} />
-          )}
+      <RNView>
+        <RNView
+          key="video_meta"
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            width: '100%',
+          }}
+        >
+          <HashTags hashtags={videoMeta.hashtags} />
+          <ViewCount views={videoMeta.views} />
         </RNView>
-      </TouchableWithoutFeedback>
+        <Description
+          title={videoMeta.text}
+          description={videoMeta.description}
+        />
+        {videoMeta.channel && !!navigation && (
+          <BitchuteChannelInfoCard
+            data={videoMeta.channel}
+            navigation={navigation}
+          />
+        )}
+        {nextVideo && (
+          <RNView>
+            <RNView
+              style={{
+                flexDirection: 'row',
+                backgroundColor: colors.primary,
+                paddingHorizontal: 10,
+                paddingVertical: 15,
+                marginTop: 15,
+              }}
+            >
+              <Text h2 style={{ color: colors.white }}>
+                Next
+              </Text>
+            </RNView>
+            <RNView>
+              <VideoCard item={nextVideo} navigation={navigation} />
+            </RNView>
+          </RNView>
+        )}
+        {!!navigation && (
+          <BitchuteNexVideos navigation={navigation} current={videoMeta} />
+        )}
+      </RNView>
     </ScrollView>
   );
 }

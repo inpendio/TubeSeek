@@ -99,16 +99,16 @@ export default function () {
 
   const DIMINISHED_HEIGHT = height * 0.2;
 
-  function setDiminishedVideoStyle() {
-    const newStyle = { ...styles };
+  function setDiminishedVideoStyle(currentStyle) {
+    const newStyle = { ...currentStyle };
     const video = { ...styleMap[orientation][styleState].video };
     video.height = DIMINISHED_HEIGHT;
     video.width = DIMINISHED_HEIGHT / 0.5625;
     newStyle.video = video;
     setStyles(newStyle);
   }
-  function setFullVideoStyle() {
-    const newStyle = { ...styles };
+  function setFullVideoStyle(currentStyle) {
+    const newStyle = { ...currentStyle };
     const video = { ...styleMap[orientation][styleState].video };
     video.height = width * 0.5625;
     video.width = width;

@@ -8,7 +8,7 @@ import Interactable from 'react-native-interactable';
 import Video from './Video';
 import VideoMeta from './VideoMeta';
 import OutsideControls from './OutsideControls';
-import useStyles from './useStyle';
+import useStyles from './useStyle-old';
 
 function VideoModal() {
   const video = useSelector(s => s.video.currentVideo);

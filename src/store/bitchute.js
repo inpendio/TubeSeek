@@ -11,6 +11,7 @@ export const ACTIONS = {
   BITCHUTE_ADD_FEED_TRENDING: '(.)bitchute_add_feed_trending(.)',
   BITCHUTE_ADD_FEED_POPULAR: '(.)bitchute_add_feed_popular(.)',
   BITCHUTE_RELOAD_ALL: '(.)bitchute_reload_all(.)',
+  BITCHUTE_RELOAD_ALL_FALSE: '(.)bitchute_reload_all_false(.)',
   BITCHUTE_APPEND_SEARCH_RESULTS: '(.)bitchute_append_search_results(.)',
   BITCHUTE_CLEAN_SEARCH_RESULTS: '(.)bitchute_clean_search_results(.)',
   BITCHUTE_APPEND_TO_FEED: '(.)bitchute_append_to_feed(.)',
@@ -32,6 +33,7 @@ const initialStore = {
     all: [],
   },
   reloadAll: false,
+  reloadAllTimeStamp: 0,
   search: {
     page: 1,
     results: [],
@@ -95,7 +97,9 @@ export default function (store = initialStore, action) {
       return newStore;
     }
     case ACTIONS.BITCHUTE_RELOAD_ALL:
-      return { ...store, reloadAll: !store.reloadAll };
+      return { ...store, reloadAll: true, reloadAllTimeStamp: Date.now() };
+    case ACTIONS.BITCHUTE_RELOAD_ALL_FALSE:
+      return { ...store, reloadAll: false, reloadAllTimeStamp: 0 };
     case ACTIONS.BITCHUTE_APPEND_SEARCH_RESULTS:
       return {
         ...store,
@@ -199,6 +203,9 @@ export const actionBitchuteAddTrendingFeed = list => ({
 });
 export const actionBitchuteReloadAll = () => ({
   type: ACTIONS.BITCHUTE_RELOAD_ALL,
+});
+export const actionBitchuteReloadAllFalse = () => ({
+  type: ACTIONS.BITCHUTE_RELOAD_ALL_FALSE,
 });
 export const actionAppendSearchResults = payload => ({
   type: ACTIONS.BITCHUTE_APPEND_SEARCH_RESULTS,

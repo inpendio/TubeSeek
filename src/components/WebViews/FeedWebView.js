@@ -6,19 +6,25 @@ import {
   actionBitchuteAddPopularFeed,
   actionBitchuteAddAllFeed,
   actionBitchuteAddTrendingFeed,
-  actionBitchuteReloadAll,
+  actionBitchuteReloadAllFalse,
   actionToggleLoading,
 } from 'store';
 import { useDispatch } from 'react-redux';
 import { BITCHUTE_URI, JS_FEED } from './utils';
 import styles from './styles';
 
+if (__DEV__) {
+  console.groupCollapsed('FeedWebView Script');
+  console.log(JS_FEED);
+  console.groupEnd();
+}
+
 function FeedWebView() {
   const dispatch = useDispatch();
 
   const onMessage = (event) => {
     let data;
-    console.log(event.nativeEvent);
+    if (__DEV__) console.log(event.nativeEvent);
     try {
       data = JSON.parse(event.nativeEvent.data);
       if (data.parsedData && data.list.subscribed.parsed.length > 0) {
@@ -47,7 +53,7 @@ function FeedWebView() {
       if (!data.parsed && data.login === false) {
         dispatch(actionBitchuteLogOut());
       }
-      dispatch(actionBitchuteReloadAll());
+      dispatch(actionBitchuteReloadAllFalse());
       dispatch(actionToggleLoading());
     } catch (err) {
       ({
@@ -62,6 +68,15 @@ function FeedWebView() {
       source={{ uri: BITCHUTE_URI }}
       injectedJavaScript={JS_FEED}
       onMessage={onMessage}
+      // onNavigationStateChange={(loading) => {
+      //   console.log(loading);
+      // }}
+      // onError={(e) => {
+      //   console.log(e);
+      // }}
+      // onLoadStart={(l) => {
+      //   console.log(l);
+      // }}
     />
   );
 }

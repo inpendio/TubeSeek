@@ -29,6 +29,7 @@ export {
   actionBitchuteAddAllFeed,
   actionBitchuteAddTrendingFeed,
   actionBitchuteReloadAll,
+  actionBitchuteReloadAllFalse,
   actionAppendSearchResults,
   actionCleanSearchResults,
   actionBitchuteAppendToFeed,
@@ -57,4 +58,6 @@ export {
   actionToggleCurrentVideoPause,
   actionPlayVideo,
   actionPauseVideo,
+  actionVideoSetIsFull,
+  actionSetVideoError,
 } from './video';

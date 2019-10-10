@@ -1,4 +1,5 @@
-import { Dimensions } from 'react-native';
+import { Dimensions, StatusBar } from 'react-native';
+import DeviceInfo from 'react-native-device-info';
 import { addOrientationData } from 'store';
 
 export const ORIENTATION = {
@@ -16,6 +17,7 @@ export default function orientation({ dispatch }) {
         orientation: getOrientation(width, height),
         width,
         height,
+        statusBar: DeviceInfo.hasNotch() ? StatusBar.currentHeight : 0,
       }),
     );
   };

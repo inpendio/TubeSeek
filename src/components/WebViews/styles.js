@@ -1,6 +1,12 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-    hidden:{ position: "absolute", width: 0, height: 0, bottom: 0, left: 0, zIndex:-9999 },
-    
-})
+  hidden: {
+    position: 'absolute',
+    width: 10,
+    height: 10,
+    bottom: -110,
+    left: -110,
+    zIndex: -9999,
+  },
+});

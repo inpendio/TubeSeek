@@ -1,6 +1,7 @@
 import { analytics } from 'react-native-firebase';
 import { DBhandler } from 'db';
 import { setQueue } from 'utils';
+import { ACTIONS as GENERAL_ACTIONS } from './general';
 
 export const ACTIONS = {
   BITCHUTE_GET_VIDEO_SOURCE: '#_bitchute_get_video_source_#',
@@ -19,7 +20,14 @@ export const ACTIONS = {
   CURRENT_PAUSE_VIDEO: '#__pause_current_video__#',
   CURRENT_PLAY_VIDEO: '#__play_current_video__#',
   CURRENT_SET_BACKGROUND_STATUS: '#__set_current_video_background_status__#',
+  SET_IS_FULL: '#__set_is_full__#',
+  SET_VIDEO_ERROR: '#__set_video_error__#',
 };
+
+function getErrorMessage(error) {
+  if (error === 'rumble_video') return 'This is a rumble video. Cannot play this...';
+  return 'Uknown error !';
+}
 
 const initialState = {
   // provider: undefined,
@@ -35,6 +43,7 @@ const initialState = {
   cache: {},
   currentlyFetching: undefined,
   videoDB: null,
+  isFull: true,
 };
 
 export default function (store = initialState, action) {
@@ -93,7 +102,7 @@ export default function (store = initialState, action) {
         meta: { ...store.meta, ...action.payload.meta },
       };
     case ACTIONS.CLEAN:
-      return { ...store, currentVideo: null };
+      return { ...store, currentVideo: null, isFull: true };
     case ACTIONS.ADD_TO_QUEUE: {
       const queue = [...store.queue];
       const fetchQueue = [...store.fetchQueue];
@@ -153,8 +162,10 @@ export default function (store = initialState, action) {
             ? cache[action.payload.videoLink]
             : action.payload),
           paused: true,
+          isFull: true,
           // duration: store.currentVideo.duration,
         },
+        isFull: true,
       };
     }
     case ACTIONS.UPDATE_CURRENT_VIDEO: {
@@ -239,6 +250,23 @@ export default function (store = initialState, action) {
         ...store,
         queue,
         currentVideo,
+        isFull: true,
+      };
+    }
+    case GENERAL_ACTIONS.SET_BACKGROUND_STATUS:
+      if (action.payload) return { ...store, isFull: true };
+      return store;
+    case ACTIONS.SET_IS_FULL:
+      return {
+        ...store,
+        isFull: action.payload,
+      };
+    case ACTIONS.SET_VIDEO_ERROR: {
+      const currentVideo = { ...store.currentVideo };
+      currentVideo.error = getErrorMessage(action.payload);
+      return {
+        ...store,
+        currentVideo,
       };
     }
     default:
@@ -303,4 +331,12 @@ export const actionPauseVideo = () => ({
 });
 export const actionPlayVideo = () => ({
   type: ACTIONS.CURRENT_PLAY_VIDEO,
+});
+export const actionVideoSetIsFull = payload => ({
+  type: ACTIONS.SET_IS_FULL,
+  payload,
+});
+export const actionSetVideoError = payload => ({
+  type: ACTIONS.SET_VIDEO_ERROR,
+  payload,
 });
