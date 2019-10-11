@@ -111,8 +111,8 @@ android {
         applicationId "com.tubeseek"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 14
-        versionName "1.2.4"
+        versionCode 15
+        versionName "1.2.5"
     }
      signingConfigs {
         release {

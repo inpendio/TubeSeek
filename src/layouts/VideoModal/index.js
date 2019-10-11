@@ -52,6 +52,11 @@ function VideoModal() {
     if (!isDraging && _isFull) {
       setVideoFullStyle();
       setIsDraging(false);
+      Animated.timing(_translateY.current, {
+        toValue: 0,
+        useNativeDriver: true,
+        duration: 10,
+      }).start();
     }
   }, [_isFull]);
 
